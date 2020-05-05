@@ -1,0 +1,4 @@
+{"_id":{"$oid":"5dd12e4a2df58da64a5350de"},"plateNumber":"AA1717AC","name":"Audi A3","owner":"John Hopkins","cellNumber":"123","entryDate":{"$date":{"$numberLong":"1573989962000"}}}
+{"_id":{"$oid":"5dd30a1246483f3f3c747779"},"plateNumber":"sa6577fg","name":"Bmw Z3","owner":"Water Fridge","cellNumber":"89325713","entryDate":{"$date":{"$numberLong":"1574111762396"}},"__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5dd30a1a46483f3f3c74777a"},"plateNumber":"CB8800BC","name":"Opel Zafira","owner":"Misha Kirpich","cellNumber":"12341213","entryDate":{"$date":{"$numberLong":"1574111770525"}},"__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5dd30a2346483f3f3c74777b"},"plateNumber":"AF1337LS","name":"Deawoo Lanos","owner":"Martin Cook","cellNumber":"21412421","entryDate":{"$date":{"$numberLong":"1574111779690"}},"__v":{"$numberInt":"0"}}

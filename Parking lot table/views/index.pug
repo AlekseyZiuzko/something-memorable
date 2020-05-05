@@ -1,0 +1,26 @@
+extends layout
+
+block content
+    h1 #{title}
+    
+    .database
+        table#parking-table(border='1px solid #ddd')
+            thead
+                tr
+                    td
+                        b &numero;#
+                    td
+                        b Plate Number
+                    td
+                        b Car Name
+                    td
+                        b Owner Name
+                    td
+                        b Phone Number
+                    td
+                        b Entry Date
+                    td
+                        b Select
+            tbody#table-body
+        hr
+        button.btn.btn-danger#remove-from-table(href='#') Remove

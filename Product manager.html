@@ -1,0 +1,100 @@
+<script>
+// Product manager with some methods to navigate the Catalog
+// Also there is a check on the existing Product managers, so you can only create one.
+    
+'use strict'
+function Catalog(id, name, enable) {
+    this.id = id;
+    this.name = name;
+    this.enabled = enable;
+};
+
+function Category(id, name, enable, catalog) {
+    Catalog.call(this);
+
+    this.catalog = catalog;
+}
+
+let catalog = new Catalog('001', 'Shop', true);
+let cat1 = new Category('001', 'category1', true, Catalog);
+let cat2 = new Category('002', 'category2', true, Catalog);
+let cat3 = new Category('003', 'category3', true, Catalog);
+
+let products = [
+{
+    id: "0001",
+    name: "Test product 1",
+    description: "Lorem ipsum amet lorem ipsum lorem ipsum",
+    color: "red",
+    categoryID: cat1
+},
+{
+    id: "0002",
+    name: "Test product 2",
+    description: "Lorem ipsum amet lorem ipsum lorem ipsum",
+    color: "red",
+    categoryID: cat1
+},
+{
+    id: "0003",
+    name: "Test product 3",
+    description: "Lorem ipsum amet lorem ipsum lorem ipsum",
+    color: "blue",
+    categoryID: cat2
+},
+{
+    id: "0004",
+    name: "Test product 4",
+    description: "Lorem ipsum amet lorem ipsum lorem ipsum",
+    color: "blue",
+    categoryID: cat2
+},
+{
+    id: "0005",
+    name: "Test product 5",
+    description: "Lorem ipsum amet lorem ipsum lorem ipsum",
+    color: "green",
+    categoryID: cat3
+},
+{
+    id: "0006",
+    name: "Test product 6",
+    description: "Lorem ipsum amet lorem ipsum lorem ipsum",
+    color: "green",
+    categoryID: cat3
+}];
+
+function ProductMgr() {
+    if (ProductMgr.instance) {
+        return ProductMgr.instance;
+    }
+
+    this.getProductsByCategoryID = function(id) {
+        for (let i = 0; i < products.length; i++) {
+            if (products[i].categoryID === id) {
+                console.log(`This category includes: ${products[i].name}`);
+            } else if (products[i].categoryID !== id) {
+                console.log(products);
+            }
+        }
+    },
+
+    this.filterColor = function(color) {
+        for (let i = 0; i < products.length; i++) {
+            if (products[i].color === color) {
+                console.log(`We have ${products[i].name} in this color`);
+            } else {
+                console.log(products);
+            }
+        }
+    },
+
+    this.getAllProducts = function() {
+        console.log(products);
+    },
+
+    ProductMgr.instance = this;
+};
+
+let manager = new ProductMgr();
+</script>

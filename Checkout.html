@@ -1,0 +1,81 @@
+<script>
+// Basically a checkout function for a shopping cart
+
+'use strict'
+var order = {
+    items : [
+        {
+            id: 248,
+            type: 'shoes',
+            name: 'Puma RS-X',
+            quantity: '3',
+            originalPrice: '120.00'
+        }, {
+            id: 249,
+            type: 'shoes',
+            name: 'Nike Monarch',
+            quantity: '2',
+            originalPrice: '87.50',
+            salePrice: '51.99'
+        }, {
+            id: 250,
+            type: 'clothing',
+            name: 'Puma T-shirt',
+            quantity: '1',
+            originalPrice: '15.99'
+        }, {
+            id: 251,
+            type: 'accessories',
+            name: 'Watches TISSOT',
+            quantity: '5',
+            originalPrice: '99.50',
+            salePrice: '89.99'
+        }
+    ],
+    shipping : {
+        id: 'shipping1',
+        name: 'US Delivery',
+        originalPrice: '11.00'
+    }
+};
+
+function basket (obj) {
+    var shoesPrice = 0;
+    var clothingPrice = 0;
+    var accessoriesPrice = 0;
+    var finalPrice = 0;
+
+    for (var i = 0; i < obj.items.length; i++) {
+        if (obj.items[i].type == 'shoes') {
+            if (obj.items[i].hasOwnProperty('salePrice')) {
+                shoesPrice += obj.items[i].salePrice * obj.items[i].quantity;
+            } else {
+                shoesPrice += obj.items[i].originalPrice * obj.items[i].quantity;
+            };
+        } else if (obj.items[i].type == 'clothing') {
+            if (obj.items[i].hasOwnProperty('salePrice')) {
+                clothingPrice += obj.items[i].salePrice * obj.items[i].quantity;
+            } else {
+                clothingPrice += obj.items[i].originalPrice * obj.items[i].quantity;
+            };
+        } else if (obj.items[i].type == 'accessories') {
+            if (obj.items[i].hasOwnProperty('salePrice')) {
+                accessoriesPrice += obj.items[i].salePrice * obj.items[i].quantity;
+            } else {
+                accessoriesPrice += obj.items[i].originalPrice * obj.items[i].quantity;
+            };
+        }
+    };
+
+    finalPrice = shoesPrice + clothingPrice + accessoriesPrice;
+
+    if (finalPrice > 150) {
+        finalPrice -= (finalPrice * 0.12);;
+    } else if (finalPrice < 100) {
+        finalPrice += obj.shipping.originalPrice
+    }
+    return finalPrice.toFixed(2);;
+}
+
+console.log(basket(order));
+</script>

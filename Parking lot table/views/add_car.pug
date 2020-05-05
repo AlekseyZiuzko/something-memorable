@@ -1,0 +1,19 @@
+extends layout
+
+block content
+    h1 #{title}
+    form(method='POST', action='/cars/add')
+        #form-group
+            label Plate Number:
+            input.form-control(name='plateNumber', type='text')
+        #form-group
+            label Car name:
+            input.form-control(name='name', type='text')
+        #form-group
+            label Car Owner:
+            input.form-control(name='owner', type='text')
+        #form-group
+            label Owner Cell Number:
+            input.form-control(name='cellNumber', type='text')
+            br
+        input.btn.btn-primary(type='submit', value='Submit')
