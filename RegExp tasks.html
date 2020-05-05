@@ -1,0 +1,58 @@
+<script>
+    'use strict'
+    // RegExp test tasks
+
+    // Filter a string and return only numbers withous letters
+    let str = "a12 444 g224b 78 0 q0234 5";
+    
+    let re = /\b\d+\b/g;
+    
+    console.log(str.match(re));
+    
+    // Delete all words which starts with an uppercase letters from a string
+    let str1 = "Hello there! My name is Geralt. I'm a Witcher.";
+    
+    let re1 = /\b[A-Z]['a-z]+\b/g;
+    
+    console.log(str1.replace(re1, ''));
+    
+    // Replace characters in a string with a * except first 4 and last 4 characters
+    let str2 = "DE56986623670976937041";
+    
+    let re2 = /(?<=\w{3})(\w+)(?=\w{4}){8,}/g;
+    
+    console.log(str2.replace(re2, function(e) {
+        let res = e.split('');
+        for (let i = 0; i < res.length; i++) {
+            res[i] = '*';
+        }
+        return res.join('');
+    }));
+    
+    // Find similar sections of a credit card in a string
+    let str3 = '0000111122220000';
+    let str4 = '0000111122223333';
+    let str5 = '1111222211113333';
+    
+    function checkCard(str) {
+        let re = /(\d{4})(\d{4})(\d{4})(\d{4})/;
+        let matches = str.match(re);
+        let msg = 'match';
+        let err = 'not match';
+    
+        if (matches[1] === matches[2]) {
+            return msg;
+        } else if (matches[1] === matches[3]) {
+            return msg;
+        } else if (matches[1] === matches[4]) {
+            return msg;
+        } else {
+            return err;
+        }
+    };
+    
+    console.log(checkCard(str3));
+    console.log(checkCard(str4));
+    console.log(checkCard(str5));
+    </script>
+    

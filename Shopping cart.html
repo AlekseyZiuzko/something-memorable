@@ -1,0 +1,109 @@
+<script>
+'use strict'
+
+//This basket has some basic methods: add item, remove item, empty basket and checkout. Works simply using console.
+
+class Basket {
+
+    constructor(name) {
+        this.items = [];
+        this.name = name;
+        if (Basket.instance) {
+            return Basket.instance;
+        };
+        Basket.instance = this;
+    }
+
+// add a product into items array
+    add(obj, quantity) {
+        if (this.items.includes(obj)) {
+            obj.quantity += quantity;
+        } else if ((quantity <= 0) || (typeof quantity !== 'number')) {
+            console.log('Please, enter correct value of quantity.');
+        } else {
+            obj.quantity = quantity;
+            this.items.push(obj);
+        }
+    console.log(this.items);
+    }
+
+// remove product from items array 
+    remove(obj, quantity) {
+        let index = this.items.indexOf(obj);
+        if (obj.quantity > 1) {
+            obj.quantity -= quantity;
+        } else if ((quantity <= 0) || (typeof quantity !== 'number')) {
+            console.log('Please, enter correct value of quantity.');
+        } else {
+            this.items.splice(index, 1);
+        }
+        console.log(this.items);
+    }
+
+// basically empties items array
+    emptyAll() {
+        this.items = [];
+        console.log('Shopping cart is empty');
+    }
+
+
+// checkout method sums up all product prices in the items array. If product is a certificate, its' price property is handled like a discount amount
+// it also checks if a product has a "isGift" property and if it's true, then this items' price will be 0.
+    checkout() {
+        let totalPrice = 0;
+        for (let i = 0; i < this.items.length; i++) {
+            if (this.items[i].isGift === true) {
+                this.items[i].price = 0;
+            } else if (this.items[i].type === 'certificate') {
+                totalPrice -= this.items[i].price;
+            } else {
+                totalPrice += this.items[i].price * this.items[i].quantity;
+            }
+        }
+        console.log('Total price is ' + totalPrice.toFixed(2));
+    }
+};
+
+class Product {
+
+    constructor(name, type, price) {
+        this.name = name;
+        this.price = price;
+        this.type = type;
+        this.description = 'This is a test product';
+    }
+
+    setPrice(value) {
+        this.price = value;
+        console.log(`${this.name} now cots: ${this.price}`);
+    }
+};
+
+class Bonus extends Product {
+    constructor (name, type, price) {
+        super(name, type, price);
+        this.isGift = true;
+    }
+
+    setGift(boolean) {
+        this.isGift = boolean;
+        if (this.isGift === true) {
+            console.log(`${this.name} is now a gift!`);
+        } else {
+            console.log(`${this.name} is no longer a gift!`);
+        }
+    }
+};
+
+class Certificate extends Product {
+    constructor(name, type, price) {
+        super(name, type, price);
+    }
+}
+
+let basket = new Basket('cart');
+let bikePart1 = new Product('Shimano 105', 'product', 150);
+let bikePart2 = new Product('Sram X7', 'product', 200);
+let bonus = new Bonus('Bike addiction', 'gift', 15.99);
+let certificate = new Certificate('Soul', 'certificate', 100);
+</script>

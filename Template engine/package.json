@@ -1,0 +1,15 @@
+{
+  "name": "homework6",
+  "version": "1.0.0",
+  "description": "Homework 6",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app"
+  },
+  "author": "Aleksey Ziuzko",
+  "license": "ISC",
+  "dependencies": {
+    "dom-parser": "^0.1.6",
+    "express": "^4.17.1"
+  }
+}

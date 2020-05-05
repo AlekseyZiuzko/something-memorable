@@ -1,0 +1,114 @@
+.product-list {
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap;
+}
+
+.product-item {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
+	position: relative;
+	width: 32%;
+	padding: 50px 10px 30px 10px;
+	margin-bottom: 15px;
+	border: 1px solid $main-gray-color;
+	border-radius: 3px;
+	transition: .3s;
+	&:hover {
+		border-color: $black-color;
+	}
+	&__rating {
+		position: absolute;
+		top: 15px;
+		right: 10px;
+		&-wrap {
+			float: left;
+		}
+		&--off {
+			position: absolute;
+			top: 0;
+			left: 0;
+			color: $main-gray-color;
+		}
+		&--on {
+			position: relative;
+			overflow: hidden;
+			color: #ffcb01;
+		}
+		&-count {
+			position: relative;
+			top: -1px;
+			padding-left: 5px;
+			font-size: 10px;
+			&:before {
+				content: '(';
+			}
+			&:after {
+				content: ')';
+			}
+		}
+	}
+	&__image {
+		margin-bottom: 20px;
+		img {
+			display: block;
+			max-width: 157px;
+			max-height: 157px;
+			margin: auto;
+		}
+	}
+	&__name {
+		margin-bottom: 10px;
+		color: $black-color;
+		text-transform: capitalize;
+		text-align: center;
+		font: {
+			size: 16px;
+			weight: 500;
+		}
+	}
+	&__promotion {
+		margin-bottom: 25px;
+		text-transform: capitalize;
+		text-align: center;
+		font: {
+			weight: 300;
+			size: 14px
+		}
+	}
+	&__price {
+		margin-bottom: 25px;
+		font-weight: 600;
+	}
+	&__add-btn {
+		padding: 15px;
+		margin-top: 5px;
+		margin-bottom: 5px;
+		width: 95%;
+		background-color: $white-color;
+		color: $blue-color;
+		border: 2px solid $blue-color;
+		text-transform: uppercase;
+		font-size: 14px;
+		&:hover {
+			color: $white-color;
+			border-color: transparent;
+		}
+	}
+	&__badge {
+		position: absolute;
+		top: 10px;
+		left: -3px;
+		padding: 3px 5px;
+		background-color: $main-red-color;
+		border-radius: 3px;
+		color: $white-color;
+		text-transform: uppercase;
+		font: {
+			weight: 300;
+			size: 12px;
+		};
+	}
+}
