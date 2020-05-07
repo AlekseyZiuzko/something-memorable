@@ -1,3 +1,3 @@
 Template engine
 
-Type 'nodemon' to start a local host.
+Type 'nodemon' to start a project.
