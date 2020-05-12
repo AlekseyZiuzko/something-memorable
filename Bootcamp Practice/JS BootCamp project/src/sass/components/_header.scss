@@ -1,0 +1,137 @@
+.header {
+	padding-top: 50px;
+	font-size: 14px;
+	&__logo {
+		position: absolute;
+		top: 0;
+		width: 110px;
+		height: 100px;
+		background: url("../img/logo.png") no-repeat center;
+		background-size: contain;
+	}
+	&__search {
+		display: flex;
+		height: 44px;
+		&-input {
+			width: 60%;
+			padding: 0 20px 0 50px;
+			box-sizing: border-box;
+			border: 1px solid $main-gray-color;
+			border-radius: 3px 0 0 3px;
+			@include placeholder {
+				color: $main-gray-color;
+				font-weight: 300;
+			}
+		}
+		&-icon {
+			position: absolute;
+			top: 50%;
+			left: 30px;
+			pointer-events: none;
+			transform: translateY(-50%);
+			color: $main-gray-color;
+		}
+		&-dropdown {
+			display: flex;
+			align-items: center;
+			position: relative;
+			width: 25%;
+			padding: 5px 25px 5px 15px;
+			cursor: pointer;
+			border: 1px solid $main-gray-color;
+			border-left: none;
+			i {
+				position: absolute;
+				right: 10px;
+				pointer-events: none;
+			}
+		}
+		&-btn {
+			width: 15%;
+			border-bottom-left-radius: 0;
+			border-top-left-radius: 0;
+		}
+	}
+	&__user-nav {
+		display: flex;
+		justify-content: flex-end;
+		align-items: center;
+		height: 44px;
+		&-item {
+			margin-right: 10px;
+			&:last-child {
+				margin-right: 0;
+			}
+			&-badge {
+				@include middle-alignment();
+				position: absolute;
+				top: 0;
+				right: 10px;
+				height: 17px;
+				width: 17px;
+				border-radius: 50%;
+				background-color: $main-red-color;
+				color: $white-color;
+				font-size: 10px;
+			}
+			&--cart {
+				&:hover {
+					.mini-cart {
+						visibility: visible;
+						opacity: 1;
+						transform: translateY(0);
+					}
+					.header__user-nav-link {
+						background-color: $black-color;
+						color: $white-color;
+					}
+				}
+			}
+		}
+		&-link {
+			@include middle-alignment();
+			width: 36px;
+			height: 36px;
+			border-radius: 50%;
+			background-color: $gray-light-color;
+			color: $black-color;
+			transition: .2s;
+			&:hover {
+				background-color: $black-color;
+				color: $white-color;
+			}
+		}
+	}
+	&__nav {
+		padding: 25px 0;
+		&-list {
+			display: flex;
+			justify-content: space-between;
+		}
+		&-item {
+			&-link {
+				padding: 5px 10px;
+				color: $black-color;
+				text-transform: uppercase;
+				font-weight: 500;
+				transition: .15s;
+				&:hover {
+					color: $main-red-color;
+				}
+			}
+			&.active {
+				.header__nav-item-link {
+					color: $main-red-color;
+				}
+			}
+		}
+	}
+}
+
+.banner {
+	width: 100%;
+	height: 250px;
+	margin-bottom: 45px;
+	background: url("../img/banner.png") no-repeat center;
+	background-size: cover;
+}

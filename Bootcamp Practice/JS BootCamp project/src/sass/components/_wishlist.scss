@@ -1,0 +1,49 @@
+.wishlist {
+    display: block;
+    align-items: center;
+    position: relative;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    border-top: 1px solid $main-gray-color;
+    &-title {
+        text-transform: uppercase;
+        text-align: center;
+        margin-top: 20px;
+    }
+    &-table {
+        display: block;
+        margin-top: 30px;
+        font-size: 14px;
+        thead {
+            border-bottom: 1px solid $main-gray-color;
+            margin-bottom: 20px;
+            min-width: 100%;
+        }
+        tbody {
+            min-width: 100%;
+            td {
+                margin-top: 10px;
+                float: left;
+                text-align: center;
+                min-width: 25%;
+                .removeFromWishlist{
+                    align-items: center;
+                    margin: 0px;
+                    font-size: 15px;
+                    font-weight: normal;
+                    text-align: center;
+                    white-space: nowrap;
+                    color: $black-color;
+                    background-color: $white-color;
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+    &-head {
+        float: left;
+        margin-right: 118px;
+        margin-left: 117px;
+        margin-bottom: 20px;
+    }
+}
