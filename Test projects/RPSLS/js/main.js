@@ -4,7 +4,6 @@ const score = document.getElementById("score");
 const result = document.getElementById("result");
 const restart = document.getElementById("restart");
 const modal = document.querySelector(".modal");
-const contBtn = document.querySelector(".continue-btn");
 const scoreboard = {
     player: 0,
     computer: 0,
@@ -118,9 +117,8 @@ function showWinner(winner, computerChoice) {
         <p>Player: ${scoreboard.player}</p>
         <p>Computer: ${scoreboard.computer}</p>
     `;
-
+    document.getElementById("continue").addEventListener("click", contGame);
     modal.style.display = "block";
-    contBtn.addEventListener("click", contGame);
 }
 
 // Restart
