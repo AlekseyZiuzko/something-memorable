@@ -4,6 +4,7 @@ const score = document.getElementById("score");
 const result = document.getElementById("result");
 const restart = document.getElementById("restart");
 const modal = document.querySelector(".modal");
+const contBtn = document.querySelector(".continue-btn");
 const scoreboard = {
     player: 0,
     computer: 0,
@@ -22,12 +23,16 @@ function play(e) {
 function getComputerChoice() {
     const rand = Math.random();
 
-    if (rand < 0.34) {
+    if (rand < 0.2) {
         return "rock";
-    } else if (rand <= 0.67) {
+    } else if (rand <= 0.4) {
         return "paper";
-    } else {
+    } else if (rand <= 0.6) {
         return "scissors";
+    } else if (rand <= 0.8) {
+        return "lizard";
+    } else {
+        return "spock";
     }
 }
 
@@ -38,11 +43,15 @@ function getWinner(p, c) {
     } else if (p === "rock") {
         if (c === "paper") {
             return "computer";
+        } else if (c === "spock") {
+            return "computer";
         } else {
             return "player";
         }
     } else if (p === "paper") {
         if (c === "scissors") {
+            return "computer";
+        } else if (c === "lizard") {
             return "computer";
         } else {
             return "player";
@@ -50,6 +59,24 @@ function getWinner(p, c) {
     } else if (p === "scissors") {
         if (c === "rock") {
             return "computer";
+        } else if (c === "spock") {
+            return "computer";
+        } else {
+            return "player";
+        }
+    } else if (p === "lizard") {
+        if (c === "scissors") {
+            return "computer";
+        } else if (c === "rock") {
+            return "computer";
+        } else {
+            return "player";
+        }
+    } else if (p === "spock") {
+        if (c === "paper") {
+            return "computer";
+        } else if (c === "lizard") {
+            return " computer";
         } else {
             return "player";
         }
@@ -65,6 +92,7 @@ function showWinner(winner, computerChoice) {
             <p>Computer Chose <strong>${
                 computerChoice.charAt(0).toUpperCase() + computerChoice.slice(1)
             }</strong></p>
+            <button id="continue" class="continue-btn">Continue</button>
         `;
     } else if (winner === "computer") {
         scoreboard.computer++;
@@ -74,6 +102,7 @@ function showWinner(winner, computerChoice) {
             <p>Computer Chose <strong>${
                 computerChoice.charAt(0).toUpperCase() + computerChoice.slice(1)
             }</strong></p>
+            <button id="continue" class="continue-btn">Continue</button>
         `;
     } else {
         result.innerHTML = `
@@ -82,6 +111,7 @@ function showWinner(winner, computerChoice) {
             <p>Computer Also Chose <strong>${
                 computerChoice.charAt(0).toUpperCase() + computerChoice.slice(1)
             }</strong></p>
+            <button id="continue" class="continue-btn">Continue</button>
         `;
     }
     score.innerHTML = `
@@ -90,6 +120,7 @@ function showWinner(winner, computerChoice) {
     `;
 
     modal.style.display = "block";
+    contBtn.addEventListener("click", contGame);
 }
 
 // Restart
@@ -101,6 +132,11 @@ function restartGame() {
     <p>Computer: 0</p>
     `;
     restart.style.display = "none";
+}
+
+// Continue
+function contGame() {
+    modal.style.display = "none";
 }
 
 // Clear modal

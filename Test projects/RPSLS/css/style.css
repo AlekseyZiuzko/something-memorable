@@ -70,12 +70,30 @@ body {
     background: var(--dark-color);
 }
 
-.choices {
+.choices-1 {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 2rem;
     margin-top: 3rem;
+    margin-bottom: 3rem;
     text-align: center;
+}
+
+.choices-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 2rem;
+    margin-top: 3rem;
+}
+
+.choices-2 #lizard {
+    text-align: right;
+    padding: 0 4rem;
+}
+
+.choices-2 #spock {
+    text-align: left;
+    padding: 0 4rem;
 }
 
 .choice {

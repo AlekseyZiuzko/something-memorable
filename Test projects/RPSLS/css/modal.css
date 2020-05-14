@@ -1,5 +1,7 @@
 :root {
     --modal-duration: 1s;
+    --primary-color: #003699;
+    --light-color: #f4f4f4;
 }
 .modal {
     display: none;
@@ -32,6 +34,23 @@
 .modal-content p {
     font-size: 1.2rem;
     margin-top: 1rem;
+}
+
+.continue-btn {
+    background: var(--light-color);
+    color: #333;
+    padding: 0.4rem 1.3rem;
+    font-size: 1rem;
+    cursor: pointer;
+    outline: none;
+    border: none;
+    border-radius: 10px;
+    margin-top: 1.5rem;
+}
+
+.continue-btn:hover {
+    background: var(--primary-color);
+    color: #fff;
 }
 
 @keyframes modalopen {
