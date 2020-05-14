@@ -86,16 +86,6 @@ body {
     margin-top: 3rem;
 }
 
-.choices-2 #lizard {
-    text-align: right;
-    padding: 0 4rem;
-}
-
-.choices-2 #spock {
-    text-align: left;
-    padding: 0 4rem;
-}
-
 .choice {
     cursor: pointer;
 }
@@ -121,5 +111,11 @@ body {
 @media (max-width: 500px) {
     .choice {
         font-size: 80px;
+    }
+}
+
+@media (max-width: 400px) {
+    .choice {
+        font-size: 50px;
     }
 }
