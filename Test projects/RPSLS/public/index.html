@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script
+            src="https://kit.fontawesome.com/2c0c8c90d9.js"
+            crossorigin="anonymous"
+        ></script>
+        <link rel="stylesheet" href="css/style.css" />
+        <link rel="stylesheet" href="css/modal.css" />
+        <title>RPSLS</title>
+    </head>
+    <body>
+        <div class="container">
+            <header class="header">
+                <h1 class="text-xl">Rock Paper Scissors Lizard Spock</h1>
+                <div id="score" class="score">
+                    <p>Player: 0</p>
+                    <p>Computer: 0</p>
+                </div>
+            </header>
+            <button id="restart" class="restart-btn">
+                Restart Game
+            </button>
+            <section class="game">
+                <h2 class="text-lg">Make Your Selection!</h2>
+                <div class="choices-1">
+                    <div id="rock" class="choice">
+                        <i class="fas fa-hand-rock fa-10x"></i>
+                        <h1>Rock</h1>
+                    </div>
+
+                    <i id="paper" class="choice fas fa-hand-paper fa-10x"></i>
+                    <i
+                        id="scissors"
+                        class="choice fas fa-hand-scissors fa-10x"
+                    ></i>
+                </div>
+                <div class="choices-2">
+                    <i id="lizard" class="choice fas fa-hand-lizard fa-10x"></i>
+                    <i id="spock" class="choice fas fa-hand-spock fa-10x"></i>
+                </div>
+            </section>
+            <section class="tabs">
+                <div class="container">
+                    <div id="tab-1" class="tab-item tab-border">
+                        <p class="hide-sm">How to play</p>
+                    </div>
+                    <div id="tab-2" class="tab-item">
+                        <p class="hide-sm">About the game</p>
+                    </div>
+                </div>
+            </section>
+            <section class="tab-content">
+                <div id="tab-1-content" class="tab-content-item show">
+                    <div class="tab-1-inner">
+                        <img src="./images/rules.jpg" alt="Rules" />
+                        <ul class="text-md">
+                            <li class="rock">
+                                <i class="fas fa-hand-rock fa-1x"></i>
+                                <strong>Rock:</strong> smashes
+                                <strong>Scissors</strong> and
+                                <strong>Lizard</strong>.
+                            </li>
+                            <li class="paper">
+                                <i class="fas fa-hand-paper fa-1x"></i>
+                                <strong>Paper:</strong> covers
+                                <strong>Rock</strong> and disproves
+                                <strong>Spock</strong>.
+                            </li>
+                            <li class="scissors">
+                                <i class="fas fa-hand-scissors fa-1x"></i>
+                                <strong>Scissors:</strong> cuts
+                                <strong>Paper</strong> and decapitates (cuts the
+                                head off of) <strong>Lizard</strong>.
+                            </li>
+                            <li class="lizard">
+                                <i class="fas fa-hand-lizard fa-1x"></i>
+                                <strong>Lizard:</strong> eats
+                                <strong>Paper</strong> and poisons
+                                <strong>Spock</strong>.
+                            </li>
+                            <li class="spock">
+                                <i class="fas fa-hand-spock fa-1x"></i>
+                                <strong>Spock:</strong> smashes
+                                <strong>Scissors</strong> and vaporizes
+                                <strong>Rock</strong>.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="tab-2-content" class="tab-content-item">
+                    <p class="text-md">
+                        "Rock Paper Scissors Lizard Spock" is an expanded
+                        version of a game "Rock Paper Scissors". It was created
+                        by
+                        <a href="http://www.samkass.com/theories/RPSSL.html"
+                            >Sam Kass and Karen Bryla</a
+                        >
+                        and popularized by
+                        <a href="https://the-big-bang-theory.com/"
+                            >The Big Bang Theory</a
+                        >
+                        TV Show.
+                    </p>
+                </div>
+            </section>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal">
+            <div id="result" class="modal-content"></div>
+        </div>
+    </body>
+    <script src="js/main.js"></script>
+</html>

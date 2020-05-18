@@ -4,6 +4,8 @@ const score = document.getElementById("score");
 const result = document.getElementById("result");
 const restart = document.getElementById("restart");
 const modal = document.querySelector(".modal");
+const tabItems = document.querySelectorAll(".tab-item");
+const tabContentItems = document.querySelectorAll(".tab-content-item");
 const scoreboard = {
     player: 0,
     computer: 0,
@@ -14,6 +16,7 @@ function play(e) {
     restart.style.display = "inline-block";
     const playerChoice = e.target.id;
     const computerChoice = getComputerChoice();
+    console.log(playerChoice, computerChoice);
     const winner = getWinner(playerChoice, computerChoice);
     showWinner(winner, computerChoice);
 }
@@ -144,7 +147,27 @@ function clearModal(e) {
     }
 }
 
+function selectItem(e) {
+    removeBorder();
+    removeShow();
+    // Add border to current tab
+    this.classList.add("tab-border");
+    // Grab content item from DOM
+    const tabContentItem = document.querySelector(`#${this.id}-content`);
+    // Add show class
+    tabContentItem.classList.add("show");
+}
+
+function removeBorder() {
+    tabItems.forEach((item) => item.classList.remove("tab-border"));
+}
+
+function removeShow() {
+    tabContentItems.forEach((item) => item.classList.remove("show"));
+}
+
 // Event listeners
 choices.forEach((choice) => choice.addEventListener("click", play));
 window.addEventListener("click", clearModal);
 restart.addEventListener("click", restartGame);
+tabItems.forEach((item) => item.addEventListener("click", selectItem));
