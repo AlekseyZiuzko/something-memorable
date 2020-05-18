@@ -16,7 +16,6 @@ function play(e) {
     restart.style.display = "inline-block";
     const playerChoice = e.target.id;
     const computerChoice = getComputerChoice();
-    console.log(playerChoice, computerChoice);
     const winner = getWinner(playerChoice, computerChoice);
     showWinner(winner, computerChoice);
 }
@@ -150,11 +149,8 @@ function clearModal(e) {
 function selectItem(e) {
     removeBorder();
     removeShow();
-    // Add border to current tab
     this.classList.add("tab-border");
-    // Grab content item from DOM
     const tabContentItem = document.querySelector(`#${this.id}-content`);
-    // Add show class
     tabContentItem.classList.add("show");
 }
 
