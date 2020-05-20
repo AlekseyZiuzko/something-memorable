@@ -198,7 +198,7 @@ img {
 }
 
 @media (max-width: 940px) {
-    .choice {
+    .choice i {
         font-size: 110px;
     }
 
@@ -208,7 +208,7 @@ img {
 }
 
 @media (max-width: 700px) {
-    .choice {
+    .choice i {
         font-size: 110px;
     }
 
@@ -230,7 +230,7 @@ img {
 }
 
 @media (max-width: 500px) {
-    .choice {
+    .choice i {
         font-size: 80px;
     }
 
