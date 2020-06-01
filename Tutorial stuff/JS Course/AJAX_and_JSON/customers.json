@@ -1,0 +1,20 @@
+[
+    {
+        "id": 1,
+        "name": "John Doe",
+        "company": "123 Designs",
+        "phone": "111-222-333"
+    },
+    {
+        "id": 2,
+        "name": "Gordon Freeman",
+        "company": "Black Mesa",
+        "phone": "111-222-444"
+    },
+    {
+        "id": 3,
+        "name": "Adam Jenkins",
+        "company": "Sarif Industries",
+        "phone": "123-242-333"
+    }
+]
