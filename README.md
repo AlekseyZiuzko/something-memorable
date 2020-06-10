@@ -1,3 +1,3 @@
 # something-memorable
 
-This is kind of my portfolio.
+Repository for different stuff.
