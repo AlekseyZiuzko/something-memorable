@@ -1,3 +1,3 @@
 # something-memorable
 
-Repository for different stuff.
+Repository for different things.

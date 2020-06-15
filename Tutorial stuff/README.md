@@ -1,1 +1,1 @@
-Information for reference
+Information for reference.
