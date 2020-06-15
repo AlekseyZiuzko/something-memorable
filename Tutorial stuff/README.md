@@ -1,1 +1,1 @@
-Some cheatsheets for reference
+Information for reference

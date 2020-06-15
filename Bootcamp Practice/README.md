@@ -1,1 +1,1 @@
-Some things, that I did during my time on JS Bootcamp.
+Some things, that I did during my time on JS Bootcamp in Astound Commerce.
