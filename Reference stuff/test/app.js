@@ -1,9 +1,30 @@
-async function bar() {
-    return Promise.resolve(10);
+const arr = [
+    [["Julius"], ["Ceasar"]],
+    [["Albert"], ["Einstein"]],
+];
+
+const arr2 = ([name1, sirname1, name2, sirname2] = arr);
+
+function getCounter() {
+    let count = 0;
+    return function () {
+        return count++;
+    };
 }
 
-async function foo() {}
+let counter1 = getCounter();
+let counter2 = getCounter();
 
-const res1 = foo();
-const res2 = bar();
-console.log(res1, res2);
+if (!Object.create) {
+    Object.create = function (proto) {
+        function F() {}
+        F.prototype = proto;
+        return new F();
+    };
+}
+
+const animal = {
+    jumps: true,
+};
+
+const rabbit = Object.create(animal);
