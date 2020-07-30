@@ -1,33 +1,22 @@
 import React, { Component } from "react";
 
-export class EditTodo extends Component {
+export class AddSubTask extends Component {
     constructor(props) {
         super(props);
-        this.state = { title: this.props.todo.title };
+        this.state = { title: "" };
     }
 
-    handleEdit = (e) => {
+    handleAdd = (e) => {
         e.preventDefault();
-
-        if (this.props.parentId) {
-            this.props.editSubTask(
-                {
-                    title: this.state.title,
-                    id: this.props.todo.id,
-                },
-                this.props.parentId
-            );
-        } else {
-            this.props.editTodo({
-                title: this.state.title,
-                id: this.props.todo.id,
-            });
-        }
+        this.state.title === ""
+            ? alert("Please enter a Todo!")
+            : this.props.addSubTask(this.state.title, this.props.todo.id);
+        this.props.cancelAddSub();
     };
 
     handleCancel = (e) => {
         e.preventDefault();
-        this.props.cancelEdit();
+        this.props.cancelAddSub();
     };
 
     onChange = (e) => {
@@ -43,6 +32,7 @@ export class EditTodo extends Component {
                     type="text"
                     name="title"
                     style={{ flex: "10", padding: "5px" }}
+                    placeholder="Add Todo ..."
                     value={this.state.title}
                     onChange={this.onChange}
                 />
@@ -52,9 +42,9 @@ export class EditTodo extends Component {
                         flex: "1",
                         cursor: "pointer",
                     }}
-                    onClick={this.handleEdit}
+                    onClick={this.handleAdd}
                 >
-                    Save
+                    Save Subtask
                 </button>
                 <button
                     style={{
@@ -71,4 +61,4 @@ export class EditTodo extends Component {
     }
 }
 
-export default EditTodo;
+export default AddSubTask;

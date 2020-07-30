@@ -8,7 +8,8 @@ export class TodoList extends Component {
         super(props);
         this.state = {
             todos: [],
-            editing: [],
+            subTodos: {},
+            editing: "",
         };
     }
 
@@ -18,22 +19,38 @@ export class TodoList extends Component {
                 localStorage.getItem("todos") === null
                     ? []
                     : JSON.parse(localStorage.getItem("todos")),
+            subTodos:
+                localStorage.getItem("subTodos") === null
+                    ? {}
+                    : JSON.parse(localStorage.getItem("subTodos")),
         });
     }
 
     markComplete = (id) => {
-        this.setState({
-            todos: this.state.todos.map((todo) => {
-                if (todo.id === id) {
-                    todo.completed = !todo.completed;
-                    localStorage.setItem(
-                        "todos",
-                        JSON.stringify(this.state.todos)
-                    );
-                }
-                return todo;
-            }),
-        });
+        const tempSubs = { ...this.state.subTodos };
+
+        this.setState(
+            {
+                todos: this.state.todos.map((todo) => {
+                    if (todo.id === id) {
+                        todo.completed = !todo.completed;
+                        tempSubs[todo.id].forEach(
+                            (subtask) =>
+                                (subtask.completed = !subtask.completed)
+                        );
+                    }
+                    return todo;
+                }),
+                subTodos: { ...tempSubs },
+            },
+            () => {
+                localStorage.setItem("todos", JSON.stringify(this.state.todos));
+                localStorage.setItem(
+                    "subTodos",
+                    JSON.stringify(this.state.subTodos)
+                );
+            }
+        );
     };
 
     addTodo = (title) => {
@@ -42,39 +59,45 @@ export class TodoList extends Component {
             title,
             completed: false,
         };
+        const temp = [...this.state.todos, newTodo];
+        const tempSub = { [newTodo.id]: [] };
 
-        this.state.todos.push(newTodo);
-        localStorage.setItem("todos", JSON.stringify(this.state.todos));
-
-        this.setState({
-            todos:
-                localStorage.getItem("todos") === null
-                    ? []
-                    : JSON.parse(localStorage.getItem("todos")),
-        });
+        this.setState(
+            {
+                todos: temp,
+                subTodos: { ...this.state.subTodos, ...tempSub },
+            },
+            () => {
+                localStorage.setItem("todos", JSON.stringify(this.state.todos));
+                localStorage.setItem(
+                    "subTodos",
+                    JSON.stringify(this.state.subTodos)
+                );
+            }
+        );
     };
 
     setEdit = (id) => {
-        this.setState((state) => ({ editing: [...state.editing, id] }));
+        this.setState({ editing: `${id}` });
     };
 
-    cancelEdit = (id) => {
-        const copyEditing = [...this.state.editing];
-        const canceledIndex = copyEditing.indexOf(id);
-        copyEditing.splice(canceledIndex, 1);
-
+    cancelEdit = () => {
         this.setState({
-            editing: copyEditing,
+            editing: "",
         });
     };
 
     editTodo = (todo) => {
+        const temp = [...this.state.todos];
+
+        const editedTodos = temp.map((t) =>
+            t.id === todo.id ? { ...t, ...todo } : t
+        );
+
         this.setState(
             {
-                todos: this.state.todos.map((t) =>
-                    t.id === todo.id ? { ...t, ...todo } : t
-                ),
-                editing: this.state.editing.filter((id) => todo.id !== id),
+                todos: editedTodos,
+                editing: "",
             },
             () =>
                 localStorage.setItem("todos", JSON.stringify(this.state.todos))
@@ -82,19 +105,105 @@ export class TodoList extends Component {
     };
 
     deleteTodo = (id) => {
-        this.state.todos.forEach((todo, index) => {
-            if (id === todo.id) {
-                this.state.todos.splice(index, 1);
-            }
-        });
-        localStorage.setItem("todos", JSON.stringify(this.state.todos));
+        const temp = { ...this.state.subTodos };
+        delete temp[id];
 
-        this.setState({
-            todos:
-                localStorage.getItem("todos") === null
-                    ? []
-                    : JSON.parse(localStorage.getItem("todos")),
+        this.setState(
+            {
+                todos: this.state.todos.filter((item) => item.id !== id),
+                subTodos: temp,
+            },
+            () => {
+                localStorage.setItem("todos", JSON.stringify(this.state.todos));
+                localStorage.setItem(
+                    "subTodos",
+                    JSON.stringify(this.state.subTodos)
+                );
+            }
+        );
+    };
+
+    markCompletSubTask = (id, parentId) => {
+        const temp = { ...this.state.subTodos };
+        temp[parentId] = temp[parentId].map((subtask) => {
+            if (subtask.id === id) {
+                subtask.completed = !subtask.completed;
+            }
+            return subtask;
         });
+
+        this.setState(
+            {
+                subTodos: temp,
+            },
+            () =>
+                localStorage.setItem(
+                    "subTodos",
+                    JSON.stringify(this.state.subTodos)
+                )
+        );
+    };
+
+    addSubTask = (title, id) => {
+        const newSubTask = {
+            id: uuid(),
+            title,
+            completed: false,
+        };
+
+        const temp = { ...this.state.subTodos };
+
+        temp[id] = [...temp[id], newSubTask];
+
+        this.setState(
+            {
+                subTodos: { ...temp },
+            },
+            () => {
+                localStorage.setItem(
+                    "subTodos",
+                    JSON.stringify(this.state.subTodos)
+                );
+            }
+        );
+    };
+
+    editSubTask = (subtask, parentId) => {
+        const temp = { ...this.state.subTodos };
+
+        temp[parentId] = temp[parentId].map((item) =>
+            item.id === subtask.id ? { ...item, ...subtask } : item
+        );
+
+        this.setState(
+            {
+                subTodos: { ...temp },
+                editing: "",
+            },
+            () =>
+                localStorage.setItem(
+                    "subTodos",
+                    JSON.stringify(this.state.subTodos)
+                )
+        );
+    };
+
+    deleteSubTask = (id, parentId) => {
+        const temp = { ...this.state.subTodos };
+
+        temp[parentId] = temp[parentId].filter((item) => item.id !== id);
+
+        this.setState(
+            {
+                subTodos: { ...temp },
+            },
+            () => {
+                localStorage.setItem(
+                    "subTodos",
+                    JSON.stringify(this.state.subTodos)
+                );
+            }
+        );
     };
 
     render() {
@@ -103,11 +212,16 @@ export class TodoList extends Component {
                 <AddTodo addTodo={this.addTodo} />
                 <Todos
                     todos={this.state.todos}
+                    subTodos={this.state.subTodos}
                     markComplete={this.markComplete}
+                    markCompletSubTask={this.markCompletSubTask}
                     setEdit={this.setEdit}
                     editTodo={this.editTodo}
+                    editSubTask={this.editSubTask}
                     deleteTodo={this.deleteTodo}
                     cancelEdit={this.cancelEdit}
+                    addSubTask={this.addSubTask}
+                    deleteSubTask={this.deleteSubTask}
                     editing={this.state.editing}
                 />
             </div>

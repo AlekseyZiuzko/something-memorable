@@ -10,8 +10,12 @@ body {
 }
 
 a {
-    color: #333;
+    color: #fff;
     text-decoration: none;
+}
+
+a:hover {
+    color: lightgray;
 }
 
 .btn {
@@ -24,5 +28,20 @@ a {
 }
 
 .btn:hover {
+    background: #666;
+}
+
+.subBtn {
+    cursor: pointer;
+    margin-right: 10px;
+    float: right;
+    padding: 4px;
+    background: #555;
+    color: #fff;
+    border: none;
+    border-radius: 2px;
+}
+
+.subBtn:hover {
     background: #666;
 }
