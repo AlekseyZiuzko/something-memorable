@@ -1,22 +1,20 @@
 import React, { Component } from "react";
 
 export class AddSubTask extends Component {
-    constructor(props) {
-        super(props);
-        this.state = { title: "" };
-    }
+    state = { title: "" };
 
     handleAdd = (e) => {
         e.preventDefault();
-        this.state.title === ""
-            ? alert("Please enter a Todo!")
-            : this.props.addSubTask(this.state.title, this.props.todo.id);
-        this.props.cancelAddSub();
+        const { title } = this.state;
+        const { todo, cancelAddSub, addSubTask } = this.props;
+        !title ? alert("Please enter a Todo!") : addSubTask(title, todo.id);
+        cancelAddSub();
     };
 
     handleCancel = (e) => {
         e.preventDefault();
-        this.props.cancelAddSub();
+        const { cancelAddSub } = this.props;
+        cancelAddSub();
     };
 
     onChange = (e) => {
@@ -26,39 +24,47 @@ export class AddSubTask extends Component {
     };
 
     render() {
+        const { title } = this.state;
         return (
-            <form style={{ display: "flex" }}>
+            <form style={formStyle}>
                 <input
                     type="text"
                     name="title"
-                    style={{ flex: "10", padding: "5px" }}
+                    style={inputStyle}
                     placeholder="Add Todo ..."
-                    value={this.state.title}
+                    value={title}
                     onChange={this.onChange}
                 />
-                <button
-                    style={{
-                        background: "lightGreen",
-                        flex: "1",
-                        cursor: "pointer",
-                    }}
-                    onClick={this.handleAdd}
-                >
+                <button style={saveBtnStyle} onClick={this.handleAdd}>
                     Save Subtask
                 </button>
-                <button
-                    style={{
-                        background: "#FF6347",
-                        flex: "1",
-                        cursor: "pointer",
-                    }}
-                    onClick={this.handleCancel}
-                >
+                <button style={cancelBtnStyle} onClick={this.handleCancel}>
                     Cancel
                 </button>
             </form>
         );
     }
 }
+
+const formStyle = {
+    display: "flex",
+};
+
+const inputStyle = {
+    flex: "10",
+    padding: "5px",
+};
+
+const saveBtnStyle = {
+    background: "lightGreen",
+    flex: "1",
+    cursor: "pointer",
+};
+
+const cancelBtnStyle = {
+    background: "#FF6347",
+    flex: "1",
+    cursor: "pointer",
+};
 
 export default AddSubTask;

@@ -4,14 +4,11 @@ import Todos from "./Todos";
 import AddTodo from "./AddTodo";
 
 export class TodoList extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            todos: [],
-            subTodos: {},
-            editing: "",
-        };
-    }
+    state = {
+        todos: [],
+        subTodos: {},
+        editing: "",
+    };
 
     componentDidMount() {
         this.setState({
@@ -27,11 +24,11 @@ export class TodoList extends Component {
     }
 
     markComplete = (id) => {
-        const tempSubs = { ...this.state.subTodos };
-
+        const { todos, subTodos } = this.state;
+        const tempSubs = { ...subTodos };
         this.setState(
             {
-                todos: this.state.todos.map((todo) => {
+                todos: todos.map((todo) => {
                     if (todo.id === id) {
                         todo.completed = !todo.completed;
                         tempSubs[todo.id].forEach(
@@ -44,11 +41,8 @@ export class TodoList extends Component {
                 subTodos: { ...tempSubs },
             },
             () => {
-                localStorage.setItem("todos", JSON.stringify(this.state.todos));
-                localStorage.setItem(
-                    "subTodos",
-                    JSON.stringify(this.state.subTodos)
-                );
+                localStorage.setItem("todos", JSON.stringify(todos));
+                localStorage.setItem("subTodos", JSON.stringify(subTodos));
             }
         );
     };
@@ -59,13 +53,14 @@ export class TodoList extends Component {
             title,
             completed: false,
         };
-        const temp = [...this.state.todos, newTodo];
+        const { todos, subTodos } = this.state;
+        const temp = [...todos, newTodo];
         const tempSub = { [newTodo.id]: [] };
 
         this.setState(
             {
                 todos: temp,
-                subTodos: { ...this.state.subTodos, ...tempSub },
+                subTodos: { ...subTodos, ...tempSub },
             },
             () => {
                 localStorage.setItem("todos", JSON.stringify(this.state.todos));
@@ -88,7 +83,8 @@ export class TodoList extends Component {
     };
 
     editTodo = (todo) => {
-        const temp = [...this.state.todos];
+        const { todos } = this.state;
+        const temp = [...todos];
 
         const editedTodos = temp.map((t) =>
             t.id === todo.id ? { ...t, ...todo } : t
@@ -105,12 +101,13 @@ export class TodoList extends Component {
     };
 
     deleteTodo = (id) => {
-        const temp = { ...this.state.subTodos };
+        const { todos, subTodos } = this.state;
+        const temp = { ...subTodos };
         delete temp[id];
 
         this.setState(
             {
-                todos: this.state.todos.filter((item) => item.id !== id),
+                todos: todos.filter((item) => item.id !== id),
                 subTodos: temp,
             },
             () => {

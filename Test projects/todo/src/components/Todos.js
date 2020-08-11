@@ -4,30 +4,44 @@ import EditTodo from "./EditTodo";
 
 class Todos extends Component {
     render() {
-        return this.props.todos.map((todo) =>
-            this.props.editing === todo.id ? (
+        const {
+            todos,
+            subTodos,
+            editing,
+            editTodo,
+            editSubTask,
+            cancelEdit,
+            markComplete,
+            markCompletSubTask,
+            deleteTodo,
+            deleteSubTask,
+            setEdit,
+            addSubTask,
+        } = this.props;
+        return todos.map((todo) =>
+            editing === todo.id ? (
                 <EditTodo
                     key={todo.id}
                     todo={todo}
-                    editTodo={this.props.editTodo}
-                    cancelEdit={this.props.cancelEdit}
-                    editSubTask={this.props.editSubTask}
+                    editTodo={editTodo}
+                    cancelEdit={cancelEdit}
+                    editSubTask={editSubTask}
                 />
             ) : (
                 <TodoItem
                     key={todo.id}
                     todo={todo}
-                    subTodos={this.props.subTodos}
-                    markComplete={this.props.markComplete}
-                    markCompleteSubTask={this.props.markCompletSubTask}
-                    deleteTodo={this.props.deleteTodo}
-                    setEdit={this.props.setEdit}
-                    addSubTask={this.props.addSubTask}
-                    editTodo={this.props.editTodo}
-                    editSubTask={this.props.editSubTask}
-                    deleteSubTask={this.props.deleteSubTask}
-                    cancelEdit={this.props.cancelEdit}
-                    editing={this.props.editing}
+                    subTodos={subTodos}
+                    markComplete={markComplete}
+                    markCompleteSubTask={markCompletSubTask}
+                    deleteTodo={deleteTodo}
+                    setEdit={setEdit}
+                    addSubTask={addSubTask}
+                    editTodo={editTodo}
+                    editSubTask={editSubTask}
+                    deleteSubTask={deleteSubTask}
+                    cancelEdit={cancelEdit}
+                    editing={editing}
                 />
             )
         );

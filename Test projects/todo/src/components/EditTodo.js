@@ -1,33 +1,32 @@
 import React, { Component } from "react";
 
 export class EditTodo extends Component {
-    constructor(props) {
-        super(props);
-        this.state = { title: this.props.todo.title };
-    }
+    state = { title: this.props.todo.title };
 
     handleEdit = (e) => {
         e.preventDefault();
-
-        if (this.props.parentId) {
-            this.props.editSubTask(
+        const { title } = this.state;
+        const { parentId, editSubTask, editTodo, todo } = this.props;
+        if (parentId) {
+            editSubTask(
                 {
-                    title: this.state.title,
-                    id: this.props.todo.id,
+                    title: title,
+                    id: todo.id,
                 },
-                this.props.parentId
+                parentId
             );
         } else {
-            this.props.editTodo({
-                title: this.state.title,
-                id: this.props.todo.id,
+            editTodo({
+                title: title,
+                id: todo.id,
             });
         }
     };
 
     handleCancel = (e) => {
         e.preventDefault();
-        this.props.cancelEdit();
+        const { cancelEdit } = this.props;
+        cancelEdit();
     };
 
     onChange = (e) => {
@@ -37,38 +36,46 @@ export class EditTodo extends Component {
     };
 
     render() {
+        const { title } = this.state;
         return (
-            <form style={{ display: "flex" }}>
+            <form style={formStyle}>
                 <input
                     type="text"
                     name="title"
-                    style={{ flex: "10", padding: "5px" }}
-                    value={this.state.title}
+                    style={titleStyle}
+                    value={title}
                     onChange={this.onChange}
                 />
-                <button
-                    style={{
-                        background: "lightGreen",
-                        flex: "1",
-                        cursor: "pointer",
-                    }}
-                    onClick={this.handleEdit}
-                >
+                <button style={editStyle} onClick={this.handleEdit}>
                     Save
                 </button>
-                <button
-                    style={{
-                        background: "#FF6347",
-                        flex: "1",
-                        cursor: "pointer",
-                    }}
-                    onClick={this.handleCancel}
-                >
+                <button style={cancelStyle} onClick={this.handleCancel}>
                     Cancel
                 </button>
             </form>
         );
     }
 }
+
+const formStyle = {
+    display: "flex",
+};
+
+const titleStyle = {
+    flex: "10",
+    padding: "5px",
+};
+
+const editStyle = {
+    background: "lightGreen",
+    flex: "1",
+    cursor: "pointer",
+};
+
+const cancelStyle = {
+    background: "#FF6347",
+    flex: "1",
+    cursor: "pointer",
+};
 
 export default EditTodo;

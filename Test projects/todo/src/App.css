@@ -34,7 +34,7 @@ a:hover {
 .subBtn {
     cursor: pointer;
     margin-right: 10px;
-    float: right;
+    flex: 1;
     padding: 4px;
     background: #555;
     color: #fff;

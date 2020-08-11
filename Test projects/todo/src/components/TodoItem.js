@@ -9,20 +9,17 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { faMinus } from "@fortawesome/free-solid-svg-icons";
 
 export class TodoItem extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            addSub: false,
-            showSubs: false,
-        };
-    }
+    state = {
+        addSubs: false,
+        showSubs: false,
+    };
 
     addSub = () => {
-        this.setState({ addSub: true });
+        this.setState({ addSubs: true });
     };
 
     cancelAddSub = () => {
-        this.setState({ addSub: false });
+        this.setState({ addSubs: false });
     };
 
     showSub = () => {
@@ -34,30 +31,47 @@ export class TodoItem extends Component {
     };
 
     getStyle = () => {
+        const { todo } = this.props;
         return {
+            display: "flex",
+            justifyContent: "space-between",
             background: "#f4f4f4",
             padding: "10px",
             borderBottom: "1px #ccc dotted",
-            textDecoration: this.props.todo.completed ? "line-through" : "none",
+            textDecoration: todo.completed ? "line-through" : "none",
         };
     };
 
     render() {
-        const { id, title, completed } = this.props.todo;
-        const subtasks = this.props.subTodos[id];
+        const { addSubs, showSubs } = this.state;
+        const {
+            todo,
+            subTodos,
+            markComplete,
+            setEdit,
+            deleteTodo,
+            addSubTask,
+            editSubTask,
+            deleteSubTask,
+            cancelEdit,
+            markCompleteSubTask,
+            editing,
+        } = this.props;
+        const { id, title, completed } = todo;
+        const subtasks = subTodos[id];
 
         return (
             <>
                 <div style={this.getStyle()}>
-                    <p>
+                    <div>
                         <input
-                            style={{ cursor: "pointer", marginRight: "15px" }}
+                            style={checkboxStyle}
                             type="checkbox"
                             checked={completed}
-                            onChange={this.props.markComplete.bind(this, id)}
+                            onChange={markComplete.bind(this, id)}
                         />
                         {subtasks && subtasks.length > 0 ? (
-                            this.state.showSubs === false ? (
+                            !showSubs ? (
                                 <button
                                     style={showSubBtnStyle}
                                     onClick={this.showSub}
@@ -73,22 +87,9 @@ export class TodoItem extends Component {
                                 </button>
                             )
                         ) : null}
-
                         {title}
-                        <button
-                            onClick={this.props.deleteTodo.bind(this, id)}
-                            style={delBtnStyle}
-                            title="Click to delete"
-                        >
-                            <FontAwesomeIcon icon={faTrashAlt} size="lg" />
-                        </button>
-                        <button
-                            onClick={this.props.setEdit.bind(this, id)}
-                            style={editBtnStyle}
-                            title="Click to edit"
-                        >
-                            <FontAwesomeIcon icon={faEdit} size="lg" />
-                        </button>
+                    </div>
+                    <div>
                         <button
                             className="subBtn"
                             onClick={this.addSub}
@@ -96,36 +97,50 @@ export class TodoItem extends Component {
                         >
                             Add Subtask
                         </button>
-                    </p>
+                        <button
+                            onClick={setEdit.bind(this, id)}
+                            style={editBtnStyle}
+                            title="Click to edit"
+                        >
+                            <FontAwesomeIcon icon={faEdit} size="lg" />
+                        </button>
+                        <button
+                            onClick={deleteTodo.bind(this, id)}
+                            style={delBtnStyle}
+                            title="Click to delete"
+                        >
+                            <FontAwesomeIcon icon={faTrashAlt} size="lg" />
+                        </button>
+                    </div>
                 </div>
-                {this.state.addSub === true ? (
+                {addSubs && (
                     <AddSubTask
-                        key={this.props.todo.id}
-                        todo={this.props.todo}
-                        addSubTask={this.props.addSubTask}
+                        key={todo.id}
+                        todo={todo}
+                        addSubTask={addSubTask}
                         cancelAddSub={this.cancelAddSub}
                         parentId={id}
                     />
-                ) : null}
-                {this.state.showSubs === true
+                )}
+                {showSubs
                     ? subtasks.map((subtask) =>
-                          this.props.editing === subtask.id ? (
+                          editing === subtask.id ? (
                               <EditTodo
                                   key={subtask.id}
                                   todo={subtask}
-                                  editSubTask={this.props.editSubTask}
-                                  cancelEdit={this.props.cancelEdit}
-                                  showSubs={this.state.showSubs}
+                                  editSubTask={editSubTask}
+                                  cancelEdit={cancelEdit}
+                                  showSubs={showSubs}
                                   parentId={id}
                               />
                           ) : (
                               <SubTaskItem
                                   key={subtask.id}
                                   subtask={subtask}
-                                  parentId={this.props.todo.id}
-                                  markComplete={this.props.markCompleteSubTask}
-                                  deleteSubTask={this.props.deleteSubTask}
-                                  setEdit={this.props.setEdit}
+                                  parentId={todo.id}
+                                  markComplete={markCompleteSubTask}
+                                  deleteSubTask={deleteSubTask}
+                                  setEdit={setEdit}
                               />
                           )
                       )
@@ -134,6 +149,11 @@ export class TodoItem extends Component {
         );
     }
 }
+
+const checkboxStyle = {
+    cursor: "pointer",
+    marginRight: "15px",
+};
 
 const showSubBtnStyle = {
     border: "none",
@@ -145,12 +165,11 @@ const delBtnStyle = {
     color: "red",
     border: "none",
     cursor: "pointer",
-    float: "right",
 };
 
 const editBtnStyle = {
     cursor: "pointer",
-    float: "right",
+
     marginRight: "10px",
     border: "none",
 };
