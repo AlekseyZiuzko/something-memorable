@@ -32,8 +32,7 @@ export class TodoList extends Component {
                     if (todo.id === id) {
                         todo.completed = !todo.completed;
                         tempSubs[todo.id].forEach(
-                            (subtask) =>
-                                (subtask.completed = !subtask.completed)
+                            (subtask) => (subtask.completed = todo.completed)
                         );
                     }
                     return todo;
