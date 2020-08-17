@@ -1,74 +1,20 @@
 import React, { Component } from "react";
-import uuid from "react-uuid";
 import Todos from "./Todos";
 import AddTodo from "./AddTodo";
+import { connect } from "react-redux";
+import {
+    markCompleteAction,
+    markCompleteSubTodoAciton,
+    addSubTodoAction,
+    editTodoAction,
+    editSubTodoAction,
+    deleteTodoAction,
+    deleteSubTodoAction,
+} from "../actions/index";
 
 export class TodoList extends Component {
     state = {
-        todos: [],
-        subTodos: {},
         editing: "",
-    };
-
-    componentDidMount() {
-        this.setState({
-            todos:
-                localStorage.getItem("todos") === null
-                    ? []
-                    : JSON.parse(localStorage.getItem("todos")),
-            subTodos:
-                localStorage.getItem("subTodos") === null
-                    ? {}
-                    : JSON.parse(localStorage.getItem("subTodos")),
-        });
-    }
-
-    markComplete = (id) => {
-        const { todos, subTodos } = this.state;
-        const tempSubs = { ...subTodos };
-        this.setState(
-            {
-                todos: todos.map((todo) => {
-                    if (todo.id === id) {
-                        todo.completed = !todo.completed;
-                        tempSubs[todo.id].forEach(
-                            (subtask) => (subtask.completed = todo.completed)
-                        );
-                    }
-                    return todo;
-                }),
-                subTodos: { ...tempSubs },
-            },
-            () => {
-                localStorage.setItem("todos", JSON.stringify(todos));
-                localStorage.setItem("subTodos", JSON.stringify(subTodos));
-            }
-        );
-    };
-
-    addTodo = (title) => {
-        const newTodo = {
-            id: uuid(),
-            title,
-            completed: false,
-        };
-        const { todos, subTodos } = this.state;
-        const temp = [...todos, newTodo];
-        const tempSub = { [newTodo.id]: [] };
-
-        this.setState(
-            {
-                todos: temp,
-                subTodos: { ...subTodos, ...tempSub },
-            },
-            () => {
-                localStorage.setItem("todos", JSON.stringify(this.state.todos));
-                localStorage.setItem(
-                    "subTodos",
-                    JSON.stringify(this.state.subTodos)
-                );
-            }
-        );
     };
 
     setEdit = (id) => {
@@ -81,143 +27,22 @@ export class TodoList extends Component {
         });
     };
 
-    editTodo = (todo) => {
-        const { todos } = this.state;
-        const temp = [...todos];
-
-        const editedTodos = temp.map((t) =>
-            t.id === todo.id ? { ...t, ...todo } : t
-        );
-
-        this.setState(
-            {
-                todos: editedTodos,
-                editing: "",
-            },
-            () =>
-                localStorage.setItem("todos", JSON.stringify(this.state.todos))
-        );
-    };
-
-    deleteTodo = (id) => {
-        const { todos, subTodos } = this.state;
-        const temp = { ...subTodos };
-        delete temp[id];
-
-        this.setState(
-            {
-                todos: todos.filter((item) => item.id !== id),
-                subTodos: temp,
-            },
-            () => {
-                localStorage.setItem("todos", JSON.stringify(this.state.todos));
-                localStorage.setItem(
-                    "subTodos",
-                    JSON.stringify(this.state.subTodos)
-                );
-            }
-        );
-    };
-
-    markCompletSubTask = (id, parentId) => {
-        const temp = { ...this.state.subTodos };
-        temp[parentId] = temp[parentId].map((subtask) => {
-            if (subtask.id === id) {
-                subtask.completed = !subtask.completed;
-            }
-            return subtask;
-        });
-
-        this.setState(
-            {
-                subTodos: temp,
-            },
-            () =>
-                localStorage.setItem(
-                    "subTodos",
-                    JSON.stringify(this.state.subTodos)
-                )
-        );
-    };
-
-    addSubTask = (title, id) => {
-        const newSubTask = {
-            id: uuid(),
-            title,
-            completed: false,
-        };
-
-        const temp = { ...this.state.subTodos };
-
-        temp[id] = [...temp[id], newSubTask];
-
-        this.setState(
-            {
-                subTodos: { ...temp },
-            },
-            () => {
-                localStorage.setItem(
-                    "subTodos",
-                    JSON.stringify(this.state.subTodos)
-                );
-            }
-        );
-    };
-
-    editSubTask = (subtask, parentId) => {
-        const temp = { ...this.state.subTodos };
-
-        temp[parentId] = temp[parentId].map((item) =>
-            item.id === subtask.id ? { ...item, ...subtask } : item
-        );
-
-        this.setState(
-            {
-                subTodos: { ...temp },
-                editing: "",
-            },
-            () =>
-                localStorage.setItem(
-                    "subTodos",
-                    JSON.stringify(this.state.subTodos)
-                )
-        );
-    };
-
-    deleteSubTask = (id, parentId) => {
-        const temp = { ...this.state.subTodos };
-
-        temp[parentId] = temp[parentId].filter((item) => item.id !== id);
-
-        this.setState(
-            {
-                subTodos: { ...temp },
-            },
-            () => {
-                localStorage.setItem(
-                    "subTodos",
-                    JSON.stringify(this.state.subTodos)
-                );
-            }
-        );
-    };
-
     render() {
         return (
             <div>
-                <AddTodo addTodo={this.addTodo} />
+                <AddTodo subTodos={this.props.subTodos} />
                 <Todos
-                    todos={this.state.todos}
-                    subTodos={this.state.subTodos}
-                    markComplete={this.markComplete}
-                    markCompletSubTask={this.markCompletSubTask}
+                    todos={this.props.todos}
+                    subTodos={this.props.subTodos}
+                    markComplete={this.props.markComplete}
+                    markCompleteSubTodo={this.props.markCompleteSubTodo}
                     setEdit={this.setEdit}
-                    editTodo={this.editTodo}
-                    editSubTask={this.editSubTask}
-                    deleteTodo={this.deleteTodo}
+                    editTodo={this.props.editTodo}
+                    editSubTodo={this.props.editSubTodo}
+                    deleteTodo={this.props.deleteTodo}
                     cancelEdit={this.cancelEdit}
-                    addSubTask={this.addSubTask}
-                    deleteSubTask={this.deleteSubTask}
+                    addSubTodo={this.props.addSubTodo}
+                    deleteSubTodo={this.props.deleteSubTodo}
                     editing={this.state.editing}
                 />
             </div>
@@ -225,4 +50,30 @@ export class TodoList extends Component {
     }
 }
 
-export default TodoList;
+const mapStateToProps = (state) => {
+    return {
+        todos: state.todos,
+        subTodos: state.subTodos,
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        markComplete: (id, subTodos) =>
+            dispatch(markCompleteAction(id, subTodos)),
+        editTodo: (id, text) => dispatch(editTodoAction(id, text)),
+        deleteTodo: (id, subTodos) => dispatch(deleteTodoAction(id, subTodos)),
+        markCompleteSubTodo: (id, parentId) =>
+            dispatch(markCompleteSubTodoAciton(id, parentId)),
+        addSubTodo: (parentId, text) =>
+            dispatch(addSubTodoAction(parentId, text)),
+        editSubTodo: (id, text, parentId) =>
+            dispatch(editSubTodoAction(id, text, parentId)),
+        deleteSubTodo: (id, parentId) =>
+            dispatch(deleteSubTodoAction(id, parentId)),
+    };
+};
+
+const VisibleTodoList = connect(mapStateToProps, mapDispatchToProps)(TodoList);
+
+export default VisibleTodoList;

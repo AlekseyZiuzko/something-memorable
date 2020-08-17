@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 
-export class AddSubTask extends Component {
+export class AddSubTodo extends Component {
     state = { title: "" };
 
     handleAdd = (e) => {
         e.preventDefault();
         const { title } = this.state;
-        const { todo, cancelAddSub, addSubTask } = this.props;
-        !title ? alert("Please enter a Todo!") : addSubTask(title, todo.id);
+        const { todo, cancelAddSub, addSubTodo } = this.props;
+        !title ? alert("Please enter a Todo!") : addSubTodo(todo.id, title);
         cancelAddSub();
     };
 
@@ -36,7 +36,7 @@ export class AddSubTask extends Component {
                     onChange={this.onChange}
                 />
                 <button style={saveBtnStyle} onClick={this.handleAdd}>
-                    Save Subtask
+                    Save Subtodo
                 </button>
                 <button style={cancelBtnStyle} onClick={this.handleCancel}>
                     Cancel
@@ -67,4 +67,4 @@ const cancelBtnStyle = {
     cursor: "pointer",
 };
 
-export default AddSubTask;
+export default AddSubTodo;

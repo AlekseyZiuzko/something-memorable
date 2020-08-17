@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import AddSubTask from "./AddSubTask";
-import SubTaskItem from "./SubTaskItem";
+import AddSubTodo from "./AddSubTodo";
+import SubTodoItem from "./SubTodoItem";
 import EditTodo from "./EditTodo";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt } from "@fortawesome/free-regular-svg-icons";
@@ -50,15 +50,15 @@ export class TodoItem extends Component {
             markComplete,
             setEdit,
             deleteTodo,
-            addSubTask,
-            editSubTask,
-            deleteSubTask,
+            addSubTodo,
+            editSubTodo,
+            deleteSubTodo,
             cancelEdit,
-            markCompleteSubTask,
+            markCompleteSubTodo,
             editing,
         } = this.props;
         const { id, title, completed } = todo;
-        const subtasks = subTodos[id];
+        const subtodos = subTodos[id];
 
         return (
             <>
@@ -68,9 +68,9 @@ export class TodoItem extends Component {
                             style={checkboxStyle}
                             type="checkbox"
                             checked={completed}
-                            onChange={markComplete.bind(this, id)}
+                            onChange={markComplete.bind(this, id, subTodos)}
                         />
-                        {subtasks && subtasks.length > 0 ? (
+                        {subtodos && subtodos.length > 0 ? (
                             !showSubs ? (
                                 <button
                                     style={showSubBtnStyle}
@@ -93,9 +93,9 @@ export class TodoItem extends Component {
                         <button
                             className="subBtn"
                             onClick={this.addSub}
-                            title="Click to add subtask"
+                            title="Click to add subtodo"
                         >
-                            Add Subtask
+                            Add Subtodo
                         </button>
                         <button
                             onClick={setEdit.bind(this, id)}
@@ -105,7 +105,7 @@ export class TodoItem extends Component {
                             <FontAwesomeIcon icon={faEdit} size="lg" />
                         </button>
                         <button
-                            onClick={deleteTodo.bind(this, id)}
+                            onClick={deleteTodo.bind(this, id, subTodos)}
                             style={delBtnStyle}
                             title="Click to delete"
                         >
@@ -114,32 +114,32 @@ export class TodoItem extends Component {
                     </div>
                 </div>
                 {addSubs && (
-                    <AddSubTask
+                    <AddSubTodo
                         key={todo.id}
                         todo={todo}
-                        addSubTask={addSubTask}
+                        addSubTodo={addSubTodo}
                         cancelAddSub={this.cancelAddSub}
                         parentId={id}
                     />
                 )}
                 {showSubs
-                    ? subtasks.map((subtask) =>
-                          editing === subtask.id ? (
+                    ? subtodos.map((subtodo) =>
+                          editing === subtodo.id ? (
                               <EditTodo
-                                  key={subtask.id}
-                                  todo={subtask}
-                                  editSubTask={editSubTask}
+                                  key={subtodo.id}
+                                  todo={subtodo}
+                                  editSubTodo={editSubTodo}
                                   cancelEdit={cancelEdit}
                                   showSubs={showSubs}
                                   parentId={id}
                               />
                           ) : (
-                              <SubTaskItem
-                                  key={subtask.id}
-                                  subtask={subtask}
+                              <SubTodoItem
+                                  key={subtodo.id}
+                                  subtodo={subtodo}
                                   parentId={todo.id}
-                                  markComplete={markCompleteSubTask}
-                                  deleteSubTask={deleteSubTask}
+                                  markComplete={markCompleteSubTodo}
+                                  deleteSubTodo={deleteSubTodo}
                                   setEdit={setEdit}
                               />
                           )

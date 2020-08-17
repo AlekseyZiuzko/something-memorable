@@ -1,43 +1,43 @@
-import React, { Component } from "react";
+import React from "react";
+import uuid from "react-uuid";
+import { connect } from "react-redux";
+import { addTodoAction, createSubTodoArrAction } from "../actions/index";
 
-export class AddTodo extends Component {
-    state = {
-        title: "",
-    };
+export let AddTodo = ({ subTodos, createSub, addTodo }) => {
+    let input;
 
-    onChange = (e) => this.setState({ title: e.target.value });
-
-    onSubmit = (e) => {
+    const onSubmit = (e) => {
         e.preventDefault();
-        const { title } = this.state;
-        const { addTodo } = this.props;
-        !title ? alert("Please enter a Todo!") : addTodo(title);
+        const id = uuid();
+        if (!input.value) {
+            alert("Please enter a Todo!");
+        } else {
+            addTodo(id, input.value);
+            if (!subTodos[id]) {
+                createSub(id);
+            }
+        }
 
-        this.setState({ title: "" });
+        input.value = "";
     };
 
-    render() {
-        const { title } = this.state;
-        return (
-            <form onSubmit={this.onSubmit} style={formStyle}>
-                <input
-                    type="text"
-                    name="title"
-                    placeholder="Add Todo ..."
-                    style={inputStyle}
-                    value={title}
-                    onChange={this.onChange}
-                />
-                <input
-                    type="submit"
-                    value="Add Todo"
-                    className="btn"
-                    style={submitBtnStyle}
-                />
-            </form>
-        );
-    }
-}
+    return (
+        <form onSubmit={onSubmit} style={formStyle}>
+            <input
+                type="text"
+                name="title"
+                placeholder="Add Todo ..."
+                style={inputStyle}
+                ref={(node) => {
+                    return (input = node);
+                }}
+            />
+            <button type="submit" className="btn" style={submitBtnStyle}>
+                Add Todo
+            </button>
+        </form>
+    );
+};
 
 const formStyle = {
     display: "flex",
@@ -52,5 +52,14 @@ const submitBtnStyle = {
     flex: "1",
     cursor: "pointer",
 };
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        addTodo: (id, text) => dispatch(addTodoAction(id, text)),
+        createSub: (id) => dispatch(createSubTodoArrAction(id)),
+    };
+};
+
+AddTodo = connect(null, mapDispatchToProps)(AddTodo);
 
 export default AddTodo;

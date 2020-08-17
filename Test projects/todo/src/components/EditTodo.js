@@ -1,25 +1,32 @@
 import React, { Component } from "react";
 
 export class EditTodo extends Component {
-    state = { title: this.props.todo.title };
+    constructor(props) {
+        super(props);
+        this.state = { title: props.todo.title };
+    }
 
     handleEdit = (e) => {
         e.preventDefault();
         const { title } = this.state;
-        const { parentId, editSubTask, editTodo, todo } = this.props;
+        const {
+            parentId,
+            editSubTodo,
+            editTodo,
+            todo,
+            cancelEdit,
+        } = this.props;
         if (parentId) {
-            editSubTask(
-                {
-                    title: title,
-                    id: todo.id,
-                },
+            editSubTodo(
+                todo.id,
+                title,
+
                 parentId
             );
+            cancelEdit();
         } else {
-            editTodo({
-                title: title,
-                id: todo.id,
-            });
+            editTodo(todo.id, title);
+            cancelEdit();
         }
     };
 
@@ -46,7 +53,7 @@ export class EditTodo extends Component {
                     value={title}
                     onChange={this.onChange}
                 />
-                <button style={editStyle} onClick={this.handleEdit}>
+                <button block style={editStyle} onClick={this.handleEdit}>
                     Save
                 </button>
                 <button style={cancelStyle} onClick={this.handleCancel}>

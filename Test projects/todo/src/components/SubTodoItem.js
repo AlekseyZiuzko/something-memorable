@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt } from "@fortawesome/free-regular-svg-icons";
 import { faEdit } from "@fortawesome/free-regular-svg-icons";
 
-export class SubTaskItem extends Component {
+export class SubTodoItem extends Component {
     getStyle = () => {
         return {
             display: "flex",
@@ -11,26 +11,25 @@ export class SubTaskItem extends Component {
             background: "#f4f4f4",
             padding: "10px",
             borderBottom: "1px #ccc dotted",
-            textDecoration: this.props.subtask.completed
+            textDecoration: this.props.subtodo.completed
                 ? "line-through"
                 : "none",
         };
     };
 
     handleMarkComplete = () => {
-        const { markComplete, subtask, parentId } = this.props;
-        markComplete(subtask.id, parentId);
+        const { markComplete, subtodo, parentId } = this.props;
+        markComplete(subtodo.id, parentId);
     };
 
-    handleDelete = (e) => {
-        const { deleteSubTask, subtask, parentId } = this.props;
-        e.preventDefault();
-        deleteSubTask(subtask.id, parentId);
+    handleDelete = () => {
+        const { deleteSubTodo, subtodo, parentId } = this.props;
+        deleteSubTodo(subtodo.id, parentId);
     };
 
     render() {
-        const { subtask, setEdit } = this.props;
-        const { id, title, completed } = subtask;
+        const { subtodo, setEdit } = this.props;
+        const { id, title, completed } = subtodo;
 
         return (
             <div style={this.getStyle()}>
@@ -83,4 +82,4 @@ const checkboxStyle = {
     margin: "0 15px 0 27px",
 };
 
-export default SubTaskItem;
+export default SubTodoItem;
