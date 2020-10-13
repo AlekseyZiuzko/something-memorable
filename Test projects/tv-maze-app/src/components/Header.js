@@ -35,10 +35,10 @@ class Header extends Component {
                         </Menu>
                     </Header>
                 </Layout>
-                <Switch>
+                {/* <Switch>
                     <Route path="/favorites" component={FavoritesPage} />
                     <Route exact path="/" component={MainContent} />
-                </Switch>
+                </Switch> */}
             </Router>
         );
     }
