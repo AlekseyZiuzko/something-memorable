@@ -32,7 +32,7 @@ const TodayCast: FC<Props> = ({ coordinates, tempUnits }) => {
         const getWeather = (lat: number, lng: number, tempUnits: string) => {
             axios
                 .get(
-                    `http://api.weatherapi.com/v1/current.json?key=ad05f76f81cc46a0bf881518201310&q=${lat},${lng}&lang=${lang.lang}`
+                    `https://api.weatherapi.com/v1/current.json?key=ad05f76f81cc46a0bf881518201310&q=${lat},${lng}&lang=${lang.lang}`
                 )
                 .then((res) =>
                     setWeather({

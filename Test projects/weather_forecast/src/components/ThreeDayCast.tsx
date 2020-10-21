@@ -30,7 +30,7 @@ const ThreeDayCast: FC<Props> = ({ coordinates, tempUnits }) => {
         const getForecast = (lat: number, lng: number) => {
             axios
                 .get(
-                    `http://api.weatherapi.com/v1/forecast.json?key=ad05f76f81cc46a0bf881518201310&q=${lat},${lng}&days=3`
+                    `https://api.weatherapi.com/v1/forecast.json?key=ad05f76f81cc46a0bf881518201310&q=${lat},${lng}&days=3`
                 )
                 .then((res) =>
                     res.data.forecast.forecastday.map((item: any) => {
