@@ -1,4 +1,6 @@
-import React, { useState, FC } from "react";
+import React, { useState, FC, useContext } from "react";
+import { LanguageContext } from "../App";
+import translator from "../utils/translator";
 
 interface Props {
     changeTempUnits(): void;
@@ -15,12 +17,18 @@ const ControlPanel: FC<Props> = ({
 }) => {
     const [city, setTitle] = useState({ name: "" });
 
+    const lang = useContext(LanguageContext);
+
     const onChange = (e: any) => {
         setTitle({ name: e.target.value });
     };
 
     const handleSearchClick = (e: any) => {
         e.preventDefault();
+        if (!city.name) {
+            alert(translator(lang.lang, "alert-noCity"));
+            return;
+        }
         searchCity(city.name);
     };
 
@@ -33,15 +41,19 @@ const ControlPanel: FC<Props> = ({
             <form className="search">
                 <input
                     type="text"
-                    placeholder="Enter city name"
+                    placeholder={translator(lang.lang, "search-placeholder")}
                     onChange={onChange}
                 />
-                <button onClick={handleSearchClick}>Search</button>
+                <button onClick={handleSearchClick}>
+                    {translator(lang.lang, "button-search")}
+                </button>
             </form>
 
             <button onClick={changeLang}>EN/RU</button>
             <button onClick={changeTempUnits}>°C/°F</button>
-            <button onClick={handleChangeBackground}>Change background</button>
+            <button onClick={handleChangeBackground}>
+                {translator(lang.lang, "button-changeBackground")}
+            </button>
         </div>
     );
 };

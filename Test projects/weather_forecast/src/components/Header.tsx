@@ -1,5 +1,7 @@
-import React, { FC } from "react";
+import React, { FC, useContext } from "react";
 import ControlPanel from "./ControlPanel";
+import { LanguageContext } from "../App";
+import translator from "../utils/translator";
 
 interface Props {
     changeTempUnits(): void;
@@ -14,9 +16,10 @@ const Header: FC<Props> = ({
     changeBackground,
     searchCity,
 }) => {
+    const lang = useContext(LanguageContext);
     return (
         <header>
-            <h1>Weather Forecast</h1>
+            <h1>{translator(lang.lang, "main-title")}</h1>
             <ControlPanel
                 changeTempUnits={changeTempUnits}
                 changeLang={changeLang}

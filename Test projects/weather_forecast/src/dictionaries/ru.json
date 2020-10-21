@@ -1,0 +1,57 @@
+{
+    "main-title": "Прогноз Погоды",
+    "search-placeholder": "Введите название города...",
+
+    "button-search": "Поиск",
+    "button-changeBackground": "Изменить фон",
+
+    "currentForecast-title": "Погода сейчас",
+    "currentForecast-city": "Город",
+    "currentForecast-currentDate": "Текущая дата",
+    "currentForecast-currentTime": "Текущее время",
+    "currentForecast-temperature": "Температура",
+    "currentForecast-summary": "Описание",
+    "currentForecast-apparentTemperature": "Ощущается как",
+    "currentForecast-windSpeed": "Скорость ветра",
+    "currentForecast-humidity": "Влажность",
+
+    "threeDayForecast-title": "Прогноз на три дня",
+    "threeDayForecast-date": "Дата",
+    "threeDayForecast-averageTemperature": "Средняя температура",
+
+    "geoLocation-title": "Ваше местонахождение",
+    "geoLocation-latitude": "Широта",
+    "geoLocation-longitude": "Долгота",
+    "geoLocation-zoom": "Приближение",
+
+    "fullDay-mon": "Понедельник",
+    "fullDay-tue": "Вторник",
+    "fullDay-wed": "Среда",
+    "fullDay-thu": "Четверг",
+    "fullDay-fri": "Пятница",
+    "fullDay-sat": "Суббота",
+    "fullDay-sun": "Воскресенье",
+
+    "shortDay-mon": "Пн",
+    "shortDay-tue": "Вт",
+    "shortDay-wed": "Ср",
+    "shortDay-thu": "Чт",
+    "shortDay-fri": "Пт",
+    "shortDay-sat": "Сб",
+    "shortDay-sun": "Вс",
+
+    "month-jan": "Января",
+    "month-feb": "Февраля",
+    "month-mar": "Марта",
+    "month-apr": "Апреля",
+    "month-may": "Мая",
+    "month-june": "Июня",
+    "month-july": "Июля",
+    "month-aug": "Августа",
+    "month-sep": "Сентября",
+    "month-oct": "Октября",
+    "month-nov": "Ноября",
+    "month-dec": "Декабря",
+
+    "alert-noCity": "Введите название города."
+}

@@ -1,5 +1,7 @@
-import React, { FC, useState, useEffect, useRef } from "react";
+import React, { FC, useState, useEffect, useRef, useContext } from "react";
 import mapboxgl from "mapbox-gl";
+import { LanguageContext } from "../App";
+import translator from "../utils/translator";
 
 mapboxgl.accessToken =
     "pk.eyJ1IjoiYmFtYnVjaGEiLCJhIjoiY2tnN3Bjd2Y5MDllcDJxbnZ2azVpeHg1ayJ9.KOEEQI1Zz3BLR79fAXpVgA";
@@ -25,6 +27,8 @@ const GeoLocation: FC<Props> = ({ coordinates }) => {
         lat: 0,
         zoom: 10,
     });
+
+    const lang = useContext(LanguageContext);
 
     const mapContainerRef = useRef<HTMLDivElement>(null);
 
@@ -56,7 +60,9 @@ const GeoLocation: FC<Props> = ({ coordinates }) => {
                 center: [mapCoordinates.lng, mapCoordinates.lat],
                 zoom: mapCoordinates.zoom,
             });
+
             map.addControl(new mapboxgl.NavigationControl(), "bottom-right");
+
             map.on("move", () => {
                 setMapCoordinates({
                     lng: +map.getCenter().lng.toFixed(4),
@@ -64,6 +70,7 @@ const GeoLocation: FC<Props> = ({ coordinates }) => {
                     zoom: +map.getZoom().toFixed(2),
                 });
             });
+
             const marker = new mapboxgl.Marker()
                 .setLngLat([mapCoordinates.lng, mapCoordinates.lat])
                 .addTo(map);
@@ -84,12 +91,21 @@ const GeoLocation: FC<Props> = ({ coordinates }) => {
 
     return (
         <>
-            <h3>Your Location</h3>
+            <h3>{translator(lang.lang, "geoLocation-title")}</h3>
             <div className="map-container">
                 <div className="mapSidebar">
-                    <div>Latitude: {mapCoordinates.lat}°</div>
-                    <div>Longitude: {mapCoordinates.lng}°</div>
-                    <div>Zoom: {mapCoordinates.zoom}</div>
+                    <div>
+                        {translator(lang.lang, "geoLocation-latitude")}:{" "}
+                        {mapCoordinates.lat}°
+                    </div>
+                    <div>
+                        {translator(lang.lang, "geoLocation-longitude")}:{" "}
+                        {mapCoordinates.lng}°
+                    </div>
+                    <div>
+                        {translator(lang.lang, "geoLocation-zoom")}:{" "}
+                        {mapCoordinates.zoom}
+                    </div>
                 </div>
                 <div className="map" ref={mapContainerRef} />
             </div>

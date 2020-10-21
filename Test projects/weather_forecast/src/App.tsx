@@ -1,4 +1,4 @@
-import React, { useState, useEffect, FC } from "react";
+import React, { useState, useEffect, FC, createContext } from "react";
 import Header from "../src/components/Header";
 import MainContent from "./components/MainContent";
 import axios from "axios";
@@ -9,35 +9,32 @@ interface ICoordinates {
     lng: number;
 }
 
+export const LanguageContext = createContext({
+    lang: "en",
+});
+
 const App: FC = () => {
-    const [lang, setLang] = useState("en");
-    const [tempUnits, setTempUnits] = useState("C");
+    const initialLang = !!JSON.parse(localStorage.getItem("lang")!)
+        ? JSON.parse(localStorage.getItem("lang")!)
+        : "en";
+    const initialtempUnits = !!JSON.parse(localStorage.getItem("tempUnits")!)
+        ? JSON.parse(localStorage.getItem("tempUnits")!)
+        : "C";
+    const [lang, setLang] = useState(initialLang);
+    const [tempUnits, setTempUnits] = useState(initialtempUnits);
     const [coordinates, setCoordinates] = useState<ICoordinates>({
         lat: 0,
         lng: 0,
     });
     const [background, setBackground] = useState({ backgroundImage: "" });
 
-    // useEffect(() => {
-    //     // localStorage.setItem("lang", JSON.stringify(lang));
-    //     const currentLang = JSON.parse(localStorage.getItem("lang")!);
-    //     if (currentLang === "en") {
-    //         setLang("en");
-    //     } else if (currentLang === "ru") {
-    //         setLang("ru");
-    //     }
-    //     localStorage.setItem("lang", JSON.stringify(lang));
-    // }, [lang]);
+    useEffect(() => {
+        setInitialLang();
+    });
 
-    // useEffect(() => {
-    //     localStorage.setItem("tempUnits", JSON.stringify(tempUnits));
-    //     const currentTempUnits = JSON.parse(localStorage.getItem("tempUnits")!);
-    //     if (currentTempUnits) {
-    //         setTempUnits(currentTempUnits);
-    //     } else {
-    //         setTempUnits("C");
-    //     }
-    // }, [tempUnits]);
+    useEffect(() => {
+        setInitialTempUnits();
+    });
 
     useEffect(() => {
         if (coordinates.lat === 0 && coordinates.lng === 0) {
@@ -55,13 +52,29 @@ const App: FC = () => {
         changeBackground(background.backgroundImage);
     }, [background.backgroundImage]);
 
+    const setInitialLang = () => {
+        if (lang === "en") {
+            localStorage.setItem("lang", JSON.stringify(lang));
+        } else {
+            localStorage.setItem("lang", JSON.stringify(lang));
+        }
+    };
+
     const changeLang = () => {
         if (lang === "en") {
             setLang("ru");
         } else {
             setLang("en");
         }
-        // localStorage.setItem("lang", JSON.stringify(lang));
+        localStorage.setItem("lang", JSON.stringify(lang));
+    };
+
+    const setInitialTempUnits = () => {
+        if (tempUnits === "C") {
+            localStorage.setItem("tempUnits", JSON.stringify(tempUnits));
+        } else {
+            localStorage.setItem("tempUnits", JSON.stringify(tempUnits));
+        }
     };
 
     const changeTempUnits = () => {
@@ -70,6 +83,7 @@ const App: FC = () => {
         } else {
             setTempUnits("C");
         }
+        localStorage.setItem("tempUnits", JSON.stringify(tempUnits));
     };
 
     const getNewBackground = () => {
@@ -102,15 +116,17 @@ const App: FC = () => {
     };
 
     return (
-        <div className="App" style={appStyle}>
-            <Header
-                changeTempUnits={changeTempUnits}
-                changeLang={changeLang}
-                changeBackground={getNewBackground}
-                searchCity={searchCity}
-            />
-            <MainContent coordinates={coordinates} tempUnits={tempUnits} />
-        </div>
+        <LanguageContext.Provider value={{ lang }}>
+            <div className="App" style={appStyle}>
+                <Header
+                    changeTempUnits={changeTempUnits}
+                    changeLang={changeLang}
+                    changeBackground={getNewBackground}
+                    searchCity={searchCity}
+                />
+                <MainContent coordinates={coordinates} tempUnits={tempUnits} />
+            </div>
+        </LanguageContext.Provider>
     );
 };
 

@@ -1,6 +1,8 @@
-import React, { FC, useState, useEffect } from "react";
+import React, { FC, useState, useEffect, useContext } from "react";
 import axios from "axios";
 import DateComponent from "./DateComponent";
+import { LanguageContext } from "../App";
+import translator from "../utils/translator";
 
 interface Props {
     coordinates: {
@@ -21,6 +23,8 @@ interface IForecast extends Array<ForecastData> {}
 
 const ThreeDayCast: FC<Props> = ({ coordinates, tempUnits }) => {
     const [forecast, setForecast] = useState<IForecast>();
+
+    const lang = useContext(LanguageContext);
 
     useEffect(() => {
         const getForecast = (lat: number, lng: number) => {
@@ -48,13 +52,17 @@ const ThreeDayCast: FC<Props> = ({ coordinates, tempUnits }) => {
 
     return (
         <div className="ThreeDayCast">
-            <h3>Three Day Forecast</h3>
+            <h3>{translator(lang.lang, "threeDayForecast-title")}</h3>
             {forecast &&
                 forecast.map((item: any, index: number) => (
                     <div key={index}>
                         <DateComponent date={item.date} />
                         <div>
-                            Average Temperature:{" "}
+                            {translator(
+                                lang.lang,
+                                "threeDayForecast-averageTemperature"
+                            )}
+                            :{" "}
                             {tempUnits === "C"
                                 ? `${item.avgtemp_c} C`
                                 : `${item.avgtemp_f} F`}

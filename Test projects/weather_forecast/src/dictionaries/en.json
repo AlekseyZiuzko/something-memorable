@@ -1,0 +1,57 @@
+{
+    "main-title": "Weather Forecast",
+    "search-placeholder": "Enter city name...",
+
+    "button-search": "Search",
+    "button-changeBackground": "Change background",
+
+    "currentForecast-title": "Current Forecast",
+    "currentForecast-city": "City",
+    "currentForecast-currentDate": "Current Date",
+    "currentForecast-currentTime": "Current Time",
+    "currentForecast-temperature": "Temperature",
+    "currentForecast-summary": "Summary",
+    "currentForecast-apparentTemperature": "Apparent Teemperature",
+    "currentForecast-windSpeed": "Wind Speed",
+    "currentForecast-humidity": "Humidity",
+
+    "threeDayForecast-title": "Three Day Forecast",
+    "threeDayForecast-date": "Date",
+    "threeDayForecast-averageTemperature": "Average Temperature",
+
+    "geoLocation-title": "Your Location",
+    "geoLocation-latitude": "Latitude",
+    "geoLocation-longitude": "Longitude",
+    "geoLocation-zoom": "Zoom",
+
+    "fullDay-mon": "Monday",
+    "fullDay-tue": "Tuesday",
+    "fullDay-wed": "Wednesday",
+    "fullDay-thu": "Thursday",
+    "fullDay-fri": "Friday",
+    "fullDay-sat": "Saturday",
+    "fullDay-sun": "Sunday",
+
+    "shortDay-mon": "Mon",
+    "shortDay-tue": "Tue",
+    "shortDay-wed": "Wed",
+    "shortDay-thu": "Thu",
+    "shortDay-fri": "Fri",
+    "shortDay-sat": "Sat",
+    "shortDay-sun": "Sun",
+
+    "month-jan": "January",
+    "month-feb": "February",
+    "month-mar": "March",
+    "month-apr": "April",
+    "month-may": "May",
+    "month-june": "June",
+    "month-july": "July",
+    "month-aug": "August",
+    "month-sep": "September",
+    "month-oct": "October",
+    "month-nov": "November",
+    "month-dec": "December",
+
+    "alert-noCity": "Please, enter city name."
+}

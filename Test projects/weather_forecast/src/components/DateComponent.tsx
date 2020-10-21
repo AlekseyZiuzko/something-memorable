@@ -1,79 +1,102 @@
-import React, { useState, useEffect, FC } from "react";
+import React, { useState, useEffect, useContext, FC } from "react";
+import { LanguageContext } from "../App";
+import translator from "../utils/translator";
 
 interface Props {
     today?: boolean;
     date?: string;
 }
 
-const getDay = (day: number, short: boolean) => {
+const getDay = (lang: string, day: number, short: boolean) => {
     let currentDay;
     switch (day) {
         case 0:
-            currentDay = short === true ? "Sun" : "Sunday";
+            currentDay =
+                short === true
+                    ? translator(lang, "shortDay-sun")
+                    : translator(lang, "fullDay-sun");
             break;
         case 1:
-            currentDay = short === true ? "Mon" : "Monday";
+            currentDay =
+                short === true
+                    ? translator(lang, "shortDay-mon")
+                    : translator(lang, "fullDay-mon");
             break;
         case 2:
-            currentDay = short === true ? "Tues" : "Tuesday";
+            currentDay =
+                short === true
+                    ? translator(lang, "shortDay-tue")
+                    : translator(lang, "fullDay-tue");
             break;
         case 3:
-            currentDay = short === true ? "Wed" : "Wednesday";
+            currentDay =
+                short === true
+                    ? translator(lang, "shortDay-wed")
+                    : translator(lang, "fullDay-wed");
             break;
         case 4:
-            currentDay = short === true ? "Thu" : "Thursday";
+            currentDay =
+                short === true
+                    ? translator(lang, "shortDay-thu")
+                    : translator(lang, "fullDay-thu");
             break;
         case 5:
-            currentDay = short === true ? "Fri" : "Friday";
+            currentDay =
+                short === true
+                    ? translator(lang, "shortDay-fri")
+                    : translator(lang, "fullDay-fri");
             break;
         case 6:
-            currentDay = short === true ? "Sat" : "Saturday";
+            currentDay =
+                short === true
+                    ? translator(lang, "shortDay-sat")
+                    : translator(lang, "fullDay-sat");
             break;
     }
 
     return currentDay;
 };
 
-const getMonth = (month: number, short: boolean) => {
+const getMonth = (lang: string, month: number, short: boolean) => {
     let currentMonth, actualMonth;
     short === true ? (actualMonth = month) : (actualMonth = month - 1);
 
     switch (actualMonth) {
         case 0:
-            currentMonth = "January";
+            currentMonth = translator(lang, "month-jan");
             break;
         case 1:
-            currentMonth = "February";
+            currentMonth = translator(lang, "month-feb");
             break;
         case 2:
-            currentMonth = "March";
+            currentMonth = translator(lang, "month-mar");
             break;
         case 3:
-            currentMonth = "April";
+            currentMonth = translator(lang, "month-apr");
             break;
         case 4:
-            currentMonth = "May";
+            currentMonth = translator(lang, "month-may");
             break;
         case 5:
-            currentMonth = "June";
+            currentMonth = translator(lang, "month-june");
             break;
         case 6:
-            currentMonth = "July";
+            currentMonth = translator(lang, "month-july");
             break;
         case 7:
-            currentMonth = "August";
+            currentMonth = translator(lang, "month-aug");
             break;
         case 8:
-            currentMonth = "September";
+            currentMonth = translator(lang, "month-sep");
             break;
         case 9:
-            currentMonth = "October";
+            currentMonth = translator(lang, "month-oct");
             break;
         case 10:
-            currentMonth = "November";
+            currentMonth = translator(lang, "month-nov");
             break;
         case 11:
-            currentMonth = "December";
+            currentMonth = translator(lang, "month-dec");
             break;
     }
 
@@ -84,6 +107,8 @@ const DateComponent: FC<Props> = ({ today, date }) => {
     const [currentTime, setCurrentTime] = useState("");
     const [shortDate, setShortDate] = useState("");
     const [fullDate, setFullDate] = useState("");
+
+    const lang = useContext(LanguageContext);
 
     const getCurrentTime = () => {
         let date = new Date();
@@ -103,8 +128,8 @@ const DateComponent: FC<Props> = ({ today, date }) => {
         let month = date.getMonth();
         let today = date.getDate();
         let day = date.getDay();
-        let currentDay = getDay(day, true);
-        let currentMonth = getMonth(month, true);
+        let currentDay = getDay(lang.lang, day, true);
+        let currentMonth = getMonth(lang.lang, month, true);
 
         setShortDate(`${currentDay} ${today} ${currentMonth}`);
     };
@@ -115,11 +140,11 @@ const DateComponent: FC<Props> = ({ today, date }) => {
         let month = +forecastDate[1];
         let today = +forecastDate[2];
 
-        let currentMonth = getMonth(month, false);
+        let currentMonth = getMonth(lang.lang, month, false);
 
-        const dateForDay = new Date(`${currentMonth} ${today}, ${year}`);
+        const dateForDay = new Date(`${month} ${today}, ${year}`);
         let day = dateForDay.getDay();
-        let currentDay = getDay(day, false);
+        let currentDay = getDay(lang.lang, day, false);
 
         setFullDate(`${currentDay} ${today} ${currentMonth}`);
     };
@@ -146,13 +171,20 @@ const DateComponent: FC<Props> = ({ today, date }) => {
         <>
             {today ? (
                 <>
-                    <div>Current Date: {shortDate}</div>
-                    <div>Current Time: {currentTime}</div>
+                    <div>
+                        {translator(lang.lang, "currentForecast-currentDate")}:{" "}
+                        {shortDate}
+                    </div>
+                    <div>
+                        {translator(lang.lang, "currentForecast-currentTime")}:{" "}
+                        {currentTime}
+                    </div>
                 </>
             ) : (
                 <>
                     <div>
-                        Date: {fullDate} {currentTime}
+                        {translator(lang.lang, "threeDayForecast-date")}:{" "}
+                        {fullDate} {currentTime}
                     </div>
                 </>
             )}
