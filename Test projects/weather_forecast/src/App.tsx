@@ -52,15 +52,11 @@ const App: FC = () => {
         changeBackground(background.backgroundImage);
     }, [background.backgroundImage]);
 
-    const setInitialLang = () => {
-        if (lang === "en") {
-            localStorage.setItem("lang", JSON.stringify(lang));
-        } else {
-            localStorage.setItem("lang", JSON.stringify(lang));
-        }
+    const setInitialLang = (): void => {
+        localStorage.setItem("lang", JSON.stringify(lang));
     };
 
-    const changeLang = () => {
+    const changeLang = (): void => {
         if (lang === "en") {
             setLang("ru");
         } else {
@@ -69,7 +65,7 @@ const App: FC = () => {
         localStorage.setItem("lang", JSON.stringify(lang));
     };
 
-    const setInitialTempUnits = () => {
+    const setInitialTempUnits = (): void => {
         if (tempUnits === "C") {
             localStorage.setItem("tempUnits", JSON.stringify(tempUnits));
         } else {
@@ -77,7 +73,7 @@ const App: FC = () => {
         }
     };
 
-    const changeTempUnits = () => {
+    const changeTempUnits = (): void => {
         if (tempUnits === "C") {
             setTempUnits("F");
         } else {
@@ -86,10 +82,10 @@ const App: FC = () => {
         localStorage.setItem("tempUnits", JSON.stringify(tempUnits));
     };
 
-    const getNewBackground = () => {
+    const getNewBackground = (): void => {
         axios
             .get(
-                "https://api.unsplash.com/photos/random?client_id=7mibf9ZNJoaQNH9_1TUa715moxoSPCIZwwln6uRrNFU"
+                `https://api.unsplash.com/photos/random?client_id=7mibf9ZNJoaQNH9_1TUa715moxoSPCIZwwln6uRrNFU`
             )
             .then((res) => res.data.urls.regular)
             .then((link) => setBackground({ backgroundImage: `url(${link})` }))

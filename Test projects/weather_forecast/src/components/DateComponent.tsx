@@ -7,7 +7,7 @@ interface Props {
     date?: string;
 }
 
-const getDay = (lang: string, day: number, short: boolean) => {
+const getDay = (lang: string, day: number, short: boolean): string => {
     let currentDay;
     switch (day) {
         case 0:
@@ -57,7 +57,7 @@ const getDay = (lang: string, day: number, short: boolean) => {
     return currentDay;
 };
 
-const getMonth = (lang: string, month: number, short: boolean) => {
+const getMonth = (lang: string, month: number, short: boolean): string => {
     let currentMonth, actualMonth;
     short === true ? (actualMonth = month) : (actualMonth = month - 1);
 
@@ -150,7 +150,7 @@ const DateComponent: FC<Props> = ({ today, date }) => {
     };
 
     useEffect(() => {
-        if (date !== undefined) {
+        if (date) {
             getFullDate(date);
         }
     });
